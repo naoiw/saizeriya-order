@@ -37,3 +37,13 @@ chrome width or green/white color scheme to work around this.
 Manual check: switch between Quiz and Gallery on a desktop browser where
 scrollbars are non-overlay, and confirm that the header, navigation, and main
 content stay at the same horizontal position.
+
+## Compact quiz layout on phones
+
+The only compact layout rules apply inside `.quiz-play` on screens at most
+620px wide. The photo uses `dvh` with minimum/maximum limits; number keys,
+digit slots, and margins are slightly smaller. Very short devices (at most
+740px tall) hide the footer only while a question is active, not in Gallery,
+Gacha, the quiz intro or the results. **Never disable page scrolling**, because
+accessibility font scaling and error messages can increase content height.
+The goal is to avoid scrolling on common phones without breaking short screens.

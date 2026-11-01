@@ -16,3 +16,7 @@
 - For existing verified records, the collector MUST preserve `imageSource`, `groupId`, `variantLabel`, and `enabled`. Prefer official main photo (`og:image`) instead of rank/combination images.
 - Do not enable drink-bar code 5101 until a suitable official photo has been approved. It stays in the JSON but is hidden from quiz and gallery.
 - Check `pnpm test:dataset` (grouping and photo overrides) in addition to existing checks. Keep Issue #11 open for pending photo reviews.
+
+- The quiz is five questions per round. The Gacha mode is five draws **with replacement** from enabled order codes (not grouped gallery cards), so duplicates and distinct variants are intentional.
+- Gacha uses browser crypto randomness (not a fixed clock seed), and stores the immediately preceding ordered draw in tab-scoped sessionStorage to avoid an identical reroll/reload. Keep the algorithm testable by accepting an injected random callback.
+- Compact mobile styling applies only to `.quiz-play`. Do not set `overflow: hidden` on body or alter shared chrome tokens; ensure small screens remain scrollable if content genuinely exceeds the viewport.

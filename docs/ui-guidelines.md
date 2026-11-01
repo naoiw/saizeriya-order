@@ -1,49 +1,52 @@
-# Shared site chrome
+# UIの共通ルール
 
-The header and footer of `saizeriya-order` follow the layout used in
-`naoiw.github.io`, `sudoku-solver`, `market-tracker`, `switchbot-logger`
-and `audio-visualizer`.
+## 基本方針
 
-| Token | Desktop | Mobile (<=620px) |
+`saizeriya-order` のヘッダー・フッターは、`naoiw.github.io`／`sudoku-solver`／`market-tracker`／`switchbot-logger`／`audio-visualizer` などのPagesアプリと寸法・配置を合わせています。
+
+- **ライトモード固定**。サイゼリヤを意識した緑色のボタンとアクセントは維持します。
+- 共通の寸法は `src/styles.css` の `--chrome-*` CSS変数で管理します。
+- ヘッダーとフッターの横線はサイト全幅には引かず、**本文と同じ左右位置**に揃えます。
+- GitHubリンクはフッター右端に配置します。
+- ナビゲーションの順番は **クイズ → ガチャ → ギャラリー** です。
+
+## 共通の寸法
+
+| 項目 | PC | 幅620px以下 |
 | --- | --- | --- |
-| Container max width | 1180px | 1180px |
-| Horizontal gutter | 28px | 17px |
-| Header height | 78px | 67px |
-| Brand font size | 16px | 13px (saizeriya-specific fit) |
-| Footer font size | 12px | 12px |
-| Footer padding | 28px top / 32px bottom | same |
+| 最大コンテンツ幅 | 1180px | 1180px上限 |
+| 左右ガター | 28px | 17px |
+| ヘッダー高さ | 78px | 67px |
+| ブランド文字 | 16px | 13px |
+| フッター文字 | 12px | 12px |
+| フッター余白 | 上28px・下32px | 同じ |
 
-Horizontal dividers are drawn on `.header-inner` and `.footer-inner`
-rather than on full-width outer containers, so both line endpoints align
-with the main content. The repository link lives in the footer on the right.
-Header navigation (Quiz / Gallery) remains accessible on a single row on
-small devices. Keep the light background and green action buttons.
+ヘッダー下端の`.header-inner`とフッター上端の`.footer-inner`にボーダーを置きます。共通サイズを変更する場合は、外側の`.site-header`／`.main-content`／`.site-footer`の幅やガターも含めて揃っているか確認してください。
 
-For future chrome changes, use CSS variables under `:root` instead of
-hardcoding the same size independently. Gallery and quiz implementation
-and the 31-item dataset should not be affected by chrome styling changes.
+## モード切替の横ズレ防止
 
-Preview: https://naoiw.github.io/saizeriya-order/develop/
+クイズ・ガチャ・ギャラリーではページの高さが変わります。縦スクロールバーの有無で本文の横位置が動かないよう、`html` に`scrollbar-gutter: stable`を指定し、非対応環境には`overflow-y: scroll`をフォールバックとして使用しています。
 
-## Prevent layout shifts when switching modes
+**スクロールそのものは禁止しません。** `body` や`html`へ`overflow: hidden`を追加したり、画面全体の幅を独自に補正したりしないでください。
 
-Quiz, results, and gallery have different document heights. Reserve a stable
-vertical scrollbar gutter on the root `html` element with
-`scrollbar-gutter: stable`, with `overflow-y: scroll` as a fallback only for
-older browsers that do not support the property. Do not put scrollbar width
-compensation on the centered `.app-shell`, and do not change the shared
-chrome width or green/white color scheme to work around this.
+## スマートフォン
 
-Manual check: switch between Quiz and Gallery on a desktop browser where
-scrollbars are non-overlay, and confirm that the header, navigation, and main
-content stay at the same horizontal position.
+- 幅620px以下では、**クイズの進行画面 `.quiz-play` のみ**写真・入力枠・キーパッド・余白を縮小します。
+- 写真の高さは`dvh`を利用した上下限付きの指定です。
+- 幅620px以下かつ高さ740px以下では、**クイズ進行中だけ**フッターとキーボード操作ヒントを非表示にします。
+- クイズの開始・結果画面、ガチャ、ギャラリーには上記のコンパクト化とフッター非表示を適用しません。
+- ガチャとギャラリーは一覧が長くなるため、通常の縦スクロールを許容します。
+- フォント倍率・端末の高さ・画像取得エラーで内容があふれる場合、スクロールできる状態を保ちます。
 
-## Compact quiz layout on phones
+## UI変更時の確認項目
 
-The only compact layout rules apply inside `.quiz-play` on screens at most
-620px wide. The photo uses `dvh` with minimum/maximum limits; number keys,
-digit slots, and margins are slightly smaller. Very short devices (at most
-740px tall) hide the footer only while a question is active, not in Gallery,
-Gacha, the quiz intro or the results. **Never disable page scrolling**, because
-accessibility font scaling and error messages can increase content height.
-The goal is to avoid scrolling on common phones without breaking short screens.
+1. PCで3モードを切り替え、ヘッダー・本文・フッターの横位置が動かないこと。
+2. スマートフォンでクイズの回答・正解表示・結果画面を確認し、ボタンが操作不能にならないこと。
+3. ガチャは**初期状態で結果0件**、ボタン押下後に5件表示し、再抽選できること。F5で結果だけリセットされること。
+4. ギャラリーのカード／リスト切替、検索、複数注文番号表示に崩れがないこと。
+5. ライトモードと緑のボタン、フッター右端のGitHubリンク、共通横線の位置が維持されていること。
+
+公開プレビュー: https://naoiw.github.io/saizeriya-order/develop/
+
+自動テストはCSSの表示位置やスマホ実機でのスクロール量を保証しないため、画面確認を省略しないでください。
+

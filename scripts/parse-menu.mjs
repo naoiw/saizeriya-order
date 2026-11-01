@@ -43,21 +43,40 @@ export function extractMenuDetail(html, pageUrl) {
     .trim();
   if (!name || name === "サイゼリヤ") return null;
 
-  for (const match of html.matchAll(/\b(?:src|srcset|data-src|data-srcset|data-original|content)\s*=\s*(["'])(.*?)\1/gi)) {
-    // srcset may have several URL/density pairs.
+  const validImage = (raw) => {
+    try {
+      const url = new URL(decodeHtml(raw), page);
+      if (url.protocol !== "https:" || url.hostname !== "www.saizeriya.co.jp") return null;
+      if (!/^\/files\/[^/]+\.(?:webp|jpe?g|png)$/i.test(url.pathname)) return null;
+      url.search = "";
+      url.hash = "";
+      return url;
+    } catch { return null; }
+  };
+
+  // Official pages identify their actual main dish photo through og:image.
+  // Unlike numbered ranking/combination graphics, its filename may omit the code.
+  for (const match of html.matchAll(/<meta\b[^>]*>/gi)) {
+    const tag = match[0];
+    if (!/\b(?:property|name)\s*=\s*(["'])(?:og:image|twitter:image)\1/i.test(tag)) continue;
+    const content = tag.match(/\bcontent\s*=\s*(["'])(.*?)\1/i)?.[2];
+    if (!content) continue;
+    const main = validImage(content);
+    if (main && !/[_-](?:rank|comb\d*|block\d*)\./i.test(main.pathname)) {
+      return { code, name, pageUrl: page.toString(), imageSource: main.toString() };
+    }
+  }
+
+  // Fallback when the page has no product-specific social image.
+  for (const match of html.matchAll(/\b(?:src|srcset|data-src|data-srcset|data-original)\s*=\s*(["'])(.*?)\1/gi)) {
     for (const entry of decodeHtml(match[2]).split(",")) {
       const raw = entry.trim().split(/\s+/)[0];
-      if (!raw) continue;
-      try {
-        const url = new URL(raw, page);
-        if (url.protocol !== "https:" || url.hostname !== "www.saizeriya.co.jp") continue;
-        if (!/^\/files\/[^/]+\.(?:webp|jpe?g|png)(?:$)/i.test(url.pathname)) continue;
-        const filename = decodeURIComponent(url.pathname.split("/").pop());
-        if (!filename.startsWith(`${code}_`) && !filename.startsWith(`${code}-`)) continue;
-        url.search = "";
-        url.hash = "";
-        return { code, name, pageUrl: page.toString(), imageSource: url.toString() };
-      } catch { /* Skip broken candidates */ }
+      const image = validImage(raw);
+      if (!image) continue;
+      const filename = decodeURIComponent(image.pathname.split("/").pop());
+      if (!filename.startsWith(`${code}_`) && !filename.startsWith(`${code}-`)) continue;
+      if (/_rank\.|_comb\d*\.|_block\d*\./i.test(filename)) continue;
+      return { code, name, pageUrl: page.toString(), imageSource: image.toString() };
     }
   }
   return null;

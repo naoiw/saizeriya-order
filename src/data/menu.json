@@ -26,7 +26,7 @@
   {
     "code": "1402",
     "name": "アロスティチーニ",
-    "imageSource": "https://www.saizeriya.co.jp/files/1402_rank.webp",
+    "imageSource": "https://www.saizeriya.co.jp/files/%E3%82%A2%E3%83%AD%E3%82%B9%E3%83%86%E3%82%A3%E3%83%81%E3%83%BC%E3%83%8B.webp",
     "pageUrl": "https://www.saizeriya.co.jp/menu-popular/1402/"
   },
   {
@@ -92,7 +92,7 @@
   {
     "code": "2304",
     "name": "パルマ風スパゲッティ",
-    "imageSource": "https://www.saizeriya.co.jp/files/2304_rank.webp",
+    "imageSource": "https://www.saizeriya.co.jp/files/%E3%83%91%E3%83%AB%E3%83%9E%E9%A2%A8%E3%82%B9%E3%83%91%E3%82%B2%E3%83%83%E3%83%86%E3%82%A3.webp",
     "pageUrl": "https://www.saizeriya.co.jp/menu-popular/2304/"
   },
   {
@@ -135,13 +135,33 @@
     "code": "3201",
     "name": "ティラミス クラシコ",
     "imageSource": "https://www.saizeriya.co.jp/files/3201_%E3%83%86%E3%82%A3%E3%83%A9%E3%83%9F%E3%82%B9%E3%82%AF%E3%83%A9%E3%82%B7%E3%82%B3.webp",
-    "pageUrl": "https://www.saizeriya.co.jp/menu-popular/3201/"
+    "pageUrl": "https://www.saizeriya.co.jp/menu-popular/3201/",
+    "groupId": "3201",
+    "variantLabel": "すぐに"
   },
   {
     "code": "3206",
     "name": "イタリアンプリン",
     "imageSource": "https://www.saizeriya.co.jp/files/3206_%E3%82%A4%E3%82%BF%E3%83%AA%E3%82%A2%E3%83%B3%E3%83%97%E3%83%AA%E3%83%B3.webp",
-    "pageUrl": "https://www.saizeriya.co.jp/menu-popular/3206/"
+    "pageUrl": "https://www.saizeriya.co.jp/menu-popular/3206/",
+    "groupId": "3206",
+    "variantLabel": "すぐに"
+  },
+  {
+    "code": "3401",
+    "name": "グラスワイン(120ml)",
+    "imageSource": "https://www.saizeriya.co.jp/files/PC_%E3%82%B0%E3%83%A9%E3%82%B9%E3%83%AF%E3%82%A4%E3%83%B3_%E3%83%A1%E3%82%A4%E3%83%B3.webp",
+    "pageUrl": "https://www.saizeriya.co.jp/menu-popular/3401_0402/",
+    "groupId": "3401",
+    "variantLabel": "赤"
+  },
+  {
+    "code": "3402",
+    "name": "グラスワイン(120ml)",
+    "imageSource": "https://www.saizeriya.co.jp/files/PC_%E3%82%B0%E3%83%A9%E3%82%B9%E3%83%AF%E3%82%A4%E3%83%B3_%E3%83%A1%E3%82%A4%E3%83%B3.webp",
+    "pageUrl": "https://www.saizeriya.co.jp/menu-popular/3401_0402/",
+    "groupId": "3401",
+    "variantLabel": "白"
   },
   {
     "code": "3412",
@@ -180,9 +200,26 @@
     "pageUrl": "https://www.saizeriya.co.jp/menu-popular/3419/"
   },
   {
+    "code": "3901",
+    "name": "ティラミス クラシコ",
+    "imageSource": "https://www.saizeriya.co.jp/files/3201_%E3%83%86%E3%82%A3%E3%83%A9%E3%83%9F%E3%82%B9%E3%82%AF%E3%83%A9%E3%82%B7%E3%82%B3.webp",
+    "pageUrl": "https://www.saizeriya.co.jp/menu-popular/3201/",
+    "groupId": "3201",
+    "variantLabel": "あとで"
+  },
+  {
+    "code": "3906",
+    "name": "イタリアンプリン",
+    "imageSource": "https://www.saizeriya.co.jp/files/3206_%E3%82%A4%E3%82%BF%E3%83%AA%E3%82%A2%E3%83%B3%E3%83%97%E3%83%AA%E3%83%B3.webp",
+    "pageUrl": "https://www.saizeriya.co.jp/menu-popular/3206/",
+    "groupId": "3206",
+    "variantLabel": "あとで"
+  },
+  {
     "code": "5101",
     "name": "セットドリンクバー",
     "imageSource": "https://www.saizeriya.co.jp/files/5101_%E3%83%89%E3%83%AA%E3%83%B3%E3%82%AF%E3%83%90%E3%83%BC_%E3%83%96%E3%83%AD%E3%83%83%E3%82%AF1.webp",
-    "pageUrl": "https://www.saizeriya.co.jp/menu-popular/5101/"
+    "pageUrl": "https://www.saizeriya.co.jp/menu-popular/5101/",
+    "enabled": false
   }
 ]

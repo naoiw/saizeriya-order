@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { filterAndSortMenu } from "../src/lib/gallery.mjs";
+import { filterAndSortMenu, groupMenuItems } from "../src/lib/gallery.mjs";
 
 const dataset = [
   { code: "2101", name: "ミラノ風ドリア" },
@@ -32,4 +32,27 @@ test("sorts by Japanese names without changing source", () => {
   assert.deepEqual(ascending.map((i) => i.name), [...descending].reverse().map((i) => i.name));
   assert.deepEqual(dataset, original);
   assert.throws(() => filterAndSortMenu(dataset, "", "unsupported"));
+});
+
+test("groups dessert serving-time variants and glass wine color variants", () => {
+  const samples = [
+    { code: "3201", name: "ティラミス", groupId: "3201", variantLabel: "すぐに", imageSource: "photo1", pageUrl: "page1" },
+    { code: "3901", name: "ティラミス", groupId: "3201", variantLabel: "あとで", imageSource: "photo1", pageUrl: "page1" },
+    { code: "3401", name: "グラスワイン", groupId: "3401", variantLabel: "赤", imageSource: "photo2", pageUrl: "page2" },
+    { code: "3402", name: "グラスワイン", groupId: "3401", variantLabel: "白", imageSource: "photo2", pageUrl: "page2" },
+  ];
+  const groups = groupMenuItems(samples);
+  assert.equal(groups.length, 2);
+  assert.deepEqual(groups[0].codes, [
+    {code: "3201",label:"すぐに"},
+    {code: "3901",label:"あとで"},
+  ]);
+  assert.deepEqual(groups[1].codes, [
+    {code:"3401",label:"赤"},
+    {code:"3402",label:"白"},
+  ]);
+  assert.equal(filterAndSortMenu(groups, "3901").length, 1);
+  assert.equal(filterAndSortMenu(groups, "３４０２")[0].name, "グラスワイン");
+  assert.equal(filterAndSortMenu(groups, "あとで").length, 1);
+  assert.equal(samples.length, 4);
 });

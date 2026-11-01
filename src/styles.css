@@ -1,6 +1,25 @@
 :root {
-  font-family: Inter, "Noto Sans JP", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  color: #25312a; background: #f8f9f6; font-synthesis: none;
+  /* Site chrome shared with naoiw.github.io and the other Pages apps. */
+  --chrome-font: Inter, "Noto Sans JP", "Hiragino Kaku Gothic ProN", Meiryo, system-ui, sans-serif;
+  --chrome-width: 1180px;
+  --chrome-gutter: 28px;
+  --chrome-header-height: 78px;
+  --chrome-brand-size: 16px;
+  --chrome-caption-size: 11px;
+  --chrome-footer-size: 12px;
+  font-family: var(--chrome-font);
+  color: #25312a;
+  background: #f8f9f6;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+/* Reserve the vertical scrollbar gutter in every mode.
+   Quiz and Gallery have different heights; without this, their centered content
+   and navigation visibly move horizontally when the scrollbar appears. */
+html { scrollbar-gutter: stable; }
+@supports not (scrollbar-gutter: stable) {
+  html { overflow-y: scroll; }
 }
 * { box-sizing: border-box }
 body { margin: 0 }
@@ -8,14 +27,50 @@ button { font: inherit; cursor: pointer }
 button:disabled { cursor: not-allowed; opacity: .5 }
 a { color: inherit }
 .app-shell { min-height: 100dvh; display: flex; flex-direction: column }
-.site-header, .site-footer { padding: 0 24px }
-.header-inner, .footer-inner { max-width: 1040px; margin: auto; display: flex; justify-content: space-between; align-items: center; gap: 20px }
-.header-inner { min-height: 70px; border-bottom: 1px solid #dce3dc }
-.brand { font-size: 16px; font-weight: 780; letter-spacing: .075em; text-decoration: none }
-.github-link { font-size: 13px; text-decoration: none; color: #65756b }
+/* Keep all three chrome sections aligned to the same 1180px container. */
+.site-header, .main-content, .site-footer {
+  width: 100%;
+  max-width: var(--chrome-width);
+  margin: 0 auto;
+  padding-left: var(--chrome-gutter);
+  padding-right: var(--chrome-gutter);
+}
+.header-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 18px;
+  min-height: var(--chrome-header-height);
+  border-bottom: 1px solid #dce3dc;
+}
+.brand {
+  flex-shrink: 0;
+  font-size: var(--chrome-brand-size);
+  font-weight: 800;
+  letter-spacing: .02em;
+  text-decoration: none;
+}
+.main-content { flex: 1; padding-top: 62px; padding-bottom: 85px }
+.site-footer .footer-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  border-top: 1px solid #dce3dc;
+  padding: 28px 0 32px;
+  color: #77877d;
+  font-size: var(--chrome-footer-size);
+  font-weight: 500;
+  letter-spacing: .02em;
+}
+.github-link {
+  margin-left: auto;
+  flex-shrink: 0;
+  font-size: inherit;
+  text-decoration: none;
+  color: #527866;
+}
 .github-link:hover { text-decoration: underline }
-.main-content { max-width: 1040px; width: 100%; margin: 0 auto; flex: 1; padding: 62px 24px 85px }
-.site-footer .footer-inner { min-height: 70px; border-top: 1px solid #dce3dc; font-size: 11px; color: #77877d; letter-spacing: .035em }
 h1 { letter-spacing: -.035em }
 h2 { font-size: 18px }
 .section-eyebrow { font-size: 12px; letter-spacing: .15em; font-weight: 740; color: #55826a }
@@ -85,11 +140,7 @@ h2 { font-size: 18px }
 .result-codes { display: flex; flex-direction: column; text-align: right; gap: 3px; font-variant-numeric: tabular-nums; white-space: nowrap; color: #89968c; font-size: 12px }
 .result-codes strong { color: #334b38 }
 @media(max-width:640px){
-  .site-header,.site-footer { padding: 0 18px }
-  .header-inner { min-height: 62px }
-  .brand { font-size: 13px }
-  .main-content { padding: 32px 17px 56px }
-  .site-footer .footer-inner { padding: 17px 0; min-height: 0; flex-wrap: wrap; row-gap: 4px }
+  .main-content { padding-top: 32px; padding-bottom: 56px }
   .quiz-intro { margin: 24px auto }
   .intro-stats > div { min-width: 125px; padding: 16px }
   .question-photo { height: 225px }
@@ -99,8 +150,7 @@ h2 { font-size: 18px }
 }
 
 /* Shared navigation */
-.header-inner { column-gap: 28px }
-.main-nav { display: flex; align-items: stretch; gap: 5px; align-self: stretch; margin: 0 auto }
+.main-nav { display: flex; align-items: stretch; gap: 5px; align-self: stretch; margin-left: auto }
 .main-nav button { background: transparent; border: none; border-bottom: 3px solid transparent; border-radius: 0; font-size: 13px; font-weight: 650; color: #718176; padding: 0 16px; }
 .main-nav button:hover { color: #277449 }
 .main-nav button.active { color: #277449; border-bottom-color: #277449 }
@@ -139,11 +189,10 @@ h2 { font-size: 18px }
   .gallery-controls { grid-template-columns: minmax(0, 1fr) }
 }
 @media(max-width: 640px) {
-  .header-inner { gap: 8px; flex-wrap: wrap; justify-content: space-between }
-  .brand { flex: 1; }
-  .github-link { font-size: 11px }
-  .main-nav { order: 3; width: 100%; justify-content: center; min-height: 42px }
-  .main-nav button { flex: 1; max-width: 180px }
+  .header-inner { gap: 8px }
+  .brand { font-size: 13px }
+  .main-nav { gap: 0 }
+  .main-nav button { padding: 0 9px; font-size: 12px }
   .gallery-cards { gap: 10px }
   .gallery-item-photo { height: 133px; padding: 7px }
   .gallery-item-detail { padding: 12px }
@@ -155,3 +204,15 @@ h2 { font-size: 18px }
   .gallery-list .gallery-item-detail { padding: 11px }
   .gallery-list .gallery-item-detail h2 { min-height: 0 }
 }
+
+/* Shared mobile site-chrome sizing used by the other naoiw projects. */
+@media (max-width: 620px) {
+  :root { --chrome-gutter: 17px; --chrome-header-height: 67px; }
+}
+
+/* Multiple ordering codes share one gallery card. */
+.gallery-codes { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 8px 16px; }
+.gallery-code-entry { display: inline-flex; align-items: baseline; gap: 5px; white-space: nowrap; }
+.gallery-code-entry small { font-size: 11px; font-weight: 650; color: #63786b; }
+.gallery-code-entry strong { line-height: 1.35; }
+.question-variant { display: inline-block; font-size: 14px; font-weight: 760; color: #287248; padding: 5px 14px; border: 1px solid #bed9c5; background: #eff8f0; border-radius: 30px; margin: 7px auto; }

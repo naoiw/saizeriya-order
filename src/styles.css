@@ -14,6 +14,13 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
 }
+/* Reserve the vertical scrollbar gutter in every mode.
+   Quiz and Gallery have different heights; without this, their centered content
+   and navigation visibly move horizontally when the scrollbar appears. */
+html { scrollbar-gutter: stable; }
+@supports not (scrollbar-gutter: stable) {
+  html { overflow-y: scroll; }
+}
 * { box-sizing: border-box }
 body { margin: 0 }
 button { font: inherit; cursor: pointer }

@@ -8,7 +8,8 @@
     "build": "tsc --noEmit && vite build",
     "preview": "vite preview",
     "collect:menu": "node scripts/collect-menu.mjs",
-    "test:collector": "node --test scripts/parse-menu.test.mjs"
+    "test:collector": "node --test scripts/parse-menu.test.mjs",
+    "check:dataset": "node scripts/check-dataset.mjs"
   },
   "dependencies": {
     "react": "^19.1.0",

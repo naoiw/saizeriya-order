@@ -7,23 +7,23 @@ const menu = Array.from({ length: 31 }, (_, index) => ({
   name: "Dish " + index,
 }));
 
-test("selects ten unique questions and leaves the source unchanged", () => {
+test("selects five unique questions by default and leaves the source unchanged", () => {
   const original = structuredClone(menu);
-  const selected = pickQuestions(menu, 10, () => 0.5);
-  assert.equal(selected.length, 10);
-  assert.equal(new Set(selected.map((item) => item.code)).size, 10);
+  const selected = pickQuestions(menu, undefined, () => 0.5);
+  assert.equal(selected.length, 5);
+  assert.equal(new Set(selected.map((item) => item.code)).size, 5);
   assert.deepEqual(menu, original);
   assert.ok(selected.every((item) => menu.includes(item)));
 });
 
 test("supports rerolls, without repeating questions in one round", () => {
-  const first = pickQuestions(menu, 10, () => 0);
-  const second = pickQuestions(menu, 10, () => 0.99);
+  const first = pickQuestions(menu, 5, () => 0);
+  const second = pickQuestions(menu, 5, () => 0.99);
   assert.notDeepEqual(first.map((item) => item.code), second.map((item) => item.code));
 });
 
 test("cannot start with too few distinct questions", () => {
-  assert.throws(() => pickQuestions(menu.slice(0, 9), 10), RangeError);
+  assert.throws(() => pickQuestions(menu.slice(0, 4), 5), RangeError);
   assert.throws(() => pickQuestions([menu[0], menu[0]], 2), RangeError);
   assert.throws(() => pickQuestions(menu, 0), RangeError);
 });

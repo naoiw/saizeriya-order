@@ -9,7 +9,7 @@ import {
 } from "../lib/quiz.mjs";
 import DishImage from "./DishImage";
 
-const QUESTION_COUNT = 10;
+const QUESTION_COUNT = 5;
 const availableQuestions = menuItems.filter((item) => item.enabled !== false);
 type Phase = "ready" | "playing" | "review" | "complete";
 
@@ -99,9 +99,9 @@ export default function Quiz() {
           <div><strong>{QUESTION_COUNT}</strong><span>問 / 1回</span></div>
           <div><strong>{availableQuestions.length}</strong><span>登録メニュー</span></div>
         </div>
-        <p className="hint-text">毎回ランダムに10問を出題します。回答後に正解を表示し、最後に結果をまとめて確認できます。</p>
+        <p className="hint-text">毎回ランダムに5問を出題します。回答後に正解を表示し、最後に結果をまとめて確認できます。</p>
         {availableQuestions.length < QUESTION_COUNT ? (
-          <p role="alert" className="warning">開始には10件以上のメニューデータが必要です。</p>
+          <p role="alert" className="warning">開始には5件以上のメニューデータが必要です。</p>
         ) : (
           <button type="button" className="button button-primary start-button" onClick={start}>
             クイズをはじめる

@@ -2,7 +2,7 @@
  * Return distinct menu entries without mutating the original dataset.
  * A supplied random function allows deterministic tests.
  */
-export function pickQuestions(items, count = 10, random = Math.random) {
+export function pickQuestions(items, count = 5, random = Math.random) {
   if (!Number.isInteger(count) || count < 1) {
     throw new RangeError("Question count must be a positive integer");
   }

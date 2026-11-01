@@ -24,6 +24,8 @@ jobs:
         run: npm run test:collector
       - name: Test quiz logic
         run: npm run test:quiz
+      - name: Test gallery filters
+        run: npm run test:gallery
       - name: Check dataset structure
         run: npm run check:dataset
       - name: Typecheck and build

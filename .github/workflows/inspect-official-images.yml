@@ -1,0 +1,28 @@
+name: Inspect official photo candidates (temporary)
+
+on:
+  push:
+    branches: [feat/menu-variants-issue-11]
+
+permissions:
+  contents: read
+
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Read image references from official product pages
+        run: |
+          node --input-type=module <<'NODE'
+          for (const code of ["1402","2304","3401_0402","3201","3206"]) {
+            const url = "https://www.saizeriya.co.jp/menu-popular/"+code+"/";
+            try {
+              const response = await fetch(url,{signal:AbortSignal.timeout(15000)});
+              const html = await response.text();
+              console.log("PAGE",code,"status",response.status,"bytes",html.length);
+              const found = [...new Set([...html.matchAll(/(?:src|content|srcset|data-src)\s*=\s*["']([^"']+\.webp(?:\?[^"']*)?|[^"']+\.(?:jpg|png))["']/gi)].map(x=>x[1]).filter(x=>x.includes("/files/")))]; 
+              for (const src of found.slice(0,35)) console.log("IMAGE",code,src);
+              console.log("TITLE",html.match(/<title[^>]*>([\s\S]*?)<\/title>/i)?.[1]);
+            } catch(error) {console.log("ERROR",code,String(error));}
+          }
+          NODE

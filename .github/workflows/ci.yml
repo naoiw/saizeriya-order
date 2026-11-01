@@ -1,0 +1,36 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+      - develop
+
+permissions:
+  contents: read
+
+jobs:
+  test-and-build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install dependencies
+        run: npm install --no-audit --no-fund
+      - name: Test menu parser
+        run: npm run test:collector
+      - name: Test quiz logic
+        run: npm run test:quiz
+      - name: Test gallery filters
+        run: npm run test:gallery
+      - name: Check dataset structure
+        run: npm run check:dataset
+      - name: Typecheck and build
+        run: npm run build
+      - name: Verify Pages production build
+        run: npm run build:pages:main
+      - name: Verify Pages develop build
+        run: npm run build:pages:develop

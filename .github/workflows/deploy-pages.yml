@@ -1,8 +1,10 @@
-name: Deploy develop preview to GitHub Pages
+name: Deploy GitHub Pages
 
-# Keep this workflow on the default (main) branch.
-# GitHub evaluates workflow_run listeners from the default branch.
+# This workflow must exist on the default branch for workflow_run to trigger.
+# A single artifact serves main at / and develop at /develop/.
 on:
+  push:
+    branches: [main]
   workflow_run:
     workflows: [CI]
     branches: [develop]
@@ -19,7 +21,8 @@ concurrency:
 jobs:
   build:
     if: >-
-      github.event_name == 'workflow_dispatch' ||
+      (github.event_name == 'push' && github.ref == 'refs/heads/main') ||
+      (github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main') ||
       (github.event_name == 'workflow_run' &&
        github.event.workflow_run.event == 'push' &&
        github.event.workflow_run.head_branch == 'develop' &&
@@ -27,10 +30,18 @@ jobs:
        github.event.workflow_run.head_repository.full_name == github.repository)
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout validated develop revision
+      - name: Checkout production
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          path: production
+          persist-credentials: false
+
+      - name: Checkout preview
         uses: actions/checkout@v4
         with:
           ref: ${{ github.event_name == 'workflow_run' && github.event.workflow_run.head_sha || 'develop' }}
+          path: preview
           persist-credentials: false
 
       - name: Set up pnpm
@@ -43,31 +54,42 @@ jobs:
         with:
           node-version: '22'
           cache: pnpm
+          cache-dependency-path: |
+            production/pnpm-lock.yaml
+            preview/pnpm-lock.yaml
 
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
-
-      - name: Check dataset and tests
+      - name: Install and check production
+        working-directory: production
         run: |
+          pnpm install --frozen-lockfile
           pnpm test:collector
           pnpm test:quiz
           pnpm test:gallery
           pnpm check:dataset
 
-      - name: Build develop preview with GitHub Pages base path
+      - name: Build production
+        working-directory: production
+        run: pnpm build:pages:main
+
+      - name: Install and check preview
+        working-directory: preview
         run: |
-          pnpm exec tsc --noEmit
-          pnpm exec vite build --base=/saizeriya-order/develop/
+          pnpm install --frozen-lockfile
+          pnpm test:collector
+          pnpm test:quiz
+          pnpm test:gallery
+          pnpm check:dataset
+
+      - name: Build preview
+        working-directory: preview
+        run: pnpm build:pages:develop
 
       - name: Assemble Pages artifact
         run: |
           mkdir -p publish/develop
-          cp -a dist/. publish/develop/
+          cp -a production/dist/. publish/
+          cp -a preview/dist/. publish/develop/
           touch publish/.nojekyll
-          printf '%s\n' \
-            '<!doctype html>' \
-            '<html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>SAIZERIYA ORDER</title></head><body><a href="./develop/">develop preview</a></body></html>' \
-            > publish/index.html
 
       - uses: actions/configure-pages@v5
 
@@ -83,8 +105,8 @@ jobs:
       id-token: write
     environment:
       name: github-pages
-      url: https://naoiw.github.io/saizeriya-order/develop/
+      url: https://naoiw.github.io/saizeriya-order/
     steps:
-      - name: Deploy develop preview
+      - name: Deploy production and preview
         id: deployment
         uses: actions/deploy-pages@v4

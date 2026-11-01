@@ -18,8 +18,6 @@ export default function App() {
             <button type="button" className={view === "gallery" ? "active" : ""}
               aria-current={view === "gallery" ? "page" : undefined} onClick={() => setView("gallery")}>ギャラリー</button>
           </nav>
-          <a className="github-link" href="https://github.com/naoiw/saizeriya-order"
-            target="_blank" rel="noopener noreferrer">GitHub ↗</a>
         </div>
       </header>
       <main className="main-content">
@@ -27,7 +25,9 @@ export default function App() {
       </main>
       <footer className="site-footer">
         <div className="footer-inner">
-          <span>SAIZERIYA ORDER</span><span>Unofficial personal project</span>
+          <span>SAIZERIYA ORDER</span>
+          <a className="github-link" href="https://github.com/naoiw/saizeriya-order"
+            target="_blank" rel="noopener noreferrer" aria-label="GitHubでソースコードを開く">GitHub ↗</a>
         </div>
       </footer>
     </div>

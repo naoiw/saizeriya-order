@@ -30,5 +30,7 @@ jobs:
         run: npm run check:dataset
       - name: Typecheck and build
         run: npm run build
+      - name: Verify Pages production build
+        run: npm run build:pages:main
       - name: Verify Pages develop build
         run: npm run build:pages:develop

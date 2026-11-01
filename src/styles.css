@@ -97,3 +97,61 @@ h2 { font-size: 18px }
   .result-line { gap: 9px }
   .result-codes { font-size: 11px }
 }
+
+/* Shared navigation */
+.header-inner { column-gap: 28px }
+.main-nav { display: flex; align-items: stretch; gap: 5px; align-self: stretch; margin: 0 auto }
+.main-nav button { background: transparent; border: none; border-bottom: 3px solid transparent; border-radius: 0; font-size: 13px; font-weight: 650; color: #718176; padding: 0 16px; }
+.main-nav button:hover { color: #277449 }
+.main-nav button.active { color: #277449; border-bottom-color: #277449 }
+.main-nav button:focus-visible, .gallery-layout button:focus-visible { outline: 3px solid #90c4a0; outline-offset: -3px }
+/* Gallery */
+.gallery h1 { font-size: clamp(29px, 5vw, 40px); margin: 12px 0 }
+.gallery-intro { color: #66766a; font-size: 14px; line-height: 1.8; margin: 0 0 32px }
+.gallery-controls { display: grid; grid-template-columns: minmax(0, 1fr) 240px; gap: 15px; align-items: end }
+.gallery-search, .gallery-sort { display: flex; flex-direction: column; gap: 8px }
+.gallery-search label, .gallery-sort label { color: #637569; font-weight: 600; font-size: 12px }
+.gallery-search input, .gallery-sort select { width: 100%; min-height: 45px; padding: 11px 13px; border-radius: 9px; border: 1px solid #d8e3d9; background: white; font: inherit; font-size: 14px; color: #25372a }
+.gallery-search input:focus-visible, .gallery-sort select:focus-visible { outline: 3px solid #b9dbc1; border-color: #42825b }
+.gallery-toolbar { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin: 23px 0 14px }
+.gallery-count { font-size: 13px; color: #647668 }
+.gallery-layout { display: inline-flex; border: 1px solid #dae4da; padding: 4px; gap: 4px; border-radius: 9px; background: #edf1ec }
+.gallery-layout button { border: none; background: transparent; border-radius: 6px; color: #617568; padding: 8px 16px; font-size: 12px; font-weight: 670 }
+.gallery-layout button.is-active { background: white; color: #277449; box-shadow: 0 1px 4px #193b1e14 }
+.gallery-cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 17px }
+.gallery-item { min-width: 0; background: white; border: 1px solid #e0e8e0; border-radius: 12px; overflow: hidden }
+.gallery-item-photo { height: 183px; padding: 14px; display: flex; align-items: center; justify-content: center; border-bottom: 1px solid #eff1eb; background: white }
+.gallery-item-detail { padding: 17px }
+.gallery-code { font-weight: 770; font-variant-numeric: tabular-nums; color: #287248; font-size: 16px; letter-spacing: .025em }
+.gallery-item-detail h2 { font-size: 15px; line-height: 1.5; margin: 9px 0 17px; overflow-wrap: anywhere }
+.gallery-item-detail a { text-decoration: none; color: #63766b; font-size: 12px }
+.gallery-item-detail a:hover { text-decoration: underline }
+.gallery-list { display: flex; flex-direction: column; gap: 9px }
+.gallery-list .gallery-item { display: grid; grid-template-columns: 136px minmax(0, 1fr); align-items: center; min-height: 116px }
+.gallery-list .gallery-item-photo { height: 116px; padding: 10px; border-bottom: 0; border-right: 1px solid #eff1eb }
+.gallery-list .gallery-item-detail { padding: 14px 20px; }
+.gallery-list .gallery-item-detail h2 { margin: 4px 0 10px }
+.gallery-empty { background: white; border: 1px solid #e0e8e0; border-radius: 12px; text-align: center; padding: 45px 15px }
+.gallery-empty p { font-size: 13px; color: #7a8a7e; margin: 14px 0 23px }
+.gallery-disclaimer { font-size: 11px; line-height: 1.8; color: #84928a; margin: 26px 0 0 }
+@media(max-width: 760px) {
+  .gallery-cards { grid-template-columns: repeat(2, minmax(0, 1fr)) }
+  .gallery-controls { grid-template-columns: minmax(0, 1fr) }
+}
+@media(max-width: 640px) {
+  .header-inner { gap: 8px; flex-wrap: wrap; justify-content: space-between }
+  .brand { flex: 1; }
+  .github-link { font-size: 11px }
+  .main-nav { order: 3; width: 100%; justify-content: center; min-height: 42px }
+  .main-nav button { flex: 1; max-width: 180px }
+  .gallery-cards { gap: 10px }
+  .gallery-item-photo { height: 133px; padding: 7px }
+  .gallery-item-detail { padding: 12px }
+  .gallery-item-detail h2 { font-size: 13px; min-height: 40px; margin-bottom: 9px }
+  .gallery-code { font-size: 14px }
+  .gallery-item-detail a { font-size: 11px }
+  .gallery-list .gallery-item { grid-template-columns: 98px minmax(0, 1fr); min-height: 110px }
+  .gallery-list .gallery-item-photo { height: 110px; padding: 6px }
+  .gallery-list .gallery-item-detail { padding: 11px }
+  .gallery-list .gallery-item-detail h2 { min-height: 0 }
+}

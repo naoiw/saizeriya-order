@@ -33,6 +33,10 @@ pnpm build:pages:develop
 
 デプロイ結果は [GitHub Actions](https://github.com/naoiw/saizeriya-order/actions) で確認できます。
 
+## デザイン
+
+ヘッダーとフッターは `naoiw.github.io` などのPagesアプリと同じ幅・余白・文字サイズに揃えています。共通のレイアウト値は `src/styles.css` の `--chrome-*` 変数で管理し、GitHubリンクはフッター右端に配置します。ライトモードとサイゼリヤを意識した緑のボタンは維持します。
+
 ## クイズ
 
 - 登録済みメニューから**重複なしでランダムに10問**出題

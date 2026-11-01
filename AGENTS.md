@@ -10,4 +10,4 @@
 - Validate changes with `npm run test:collector`, `npm run check:dataset`, and `npm run build`. CI runs these checks.
 - Document that third-party image URLs can change or be blocked and that use of official images remains subject to rights and site terms.
 
-- Preview deployment: `develop` CI success triggers the Pages deployment workflow stored on the default `main` branch. Keep its copy on `develop` in sync with `main`. Preview build must use `/saizeriya-order/develop/` as the Vite base; never publish `main` app without an explicit release decision.
+- Pages deployment is defined on default branch `main` and mirrored on `develop`. `main` pushes and successful `develop` push CI runs trigger a single deployment containing production at `/saizeriya-order/` and preview at `/saizeriya-order/develop/`. Both builds must use their respective Vite base paths. A release to `main` requires a PR and explicit user approval.

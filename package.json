@@ -12,7 +12,8 @@
     "check:dataset": "node scripts/check-dataset.mjs",
     "test:quiz": "node --test scripts/quiz.test.mjs",
     "test:gallery": "node --test scripts/gallery.test.mjs",
-    "build:pages:develop": "tsc --noEmit && vite build --base=/saizeriya-order/develop/"
+    "build:pages:develop": "tsc --noEmit && vite build --base=/saizeriya-order/develop/",
+    "build:pages:main": "tsc --noEmit && vite build --base=/saizeriya-order/"
   },
   "dependencies": {
     "react": "^19.1.0",

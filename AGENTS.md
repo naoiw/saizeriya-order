@@ -11,3 +11,8 @@
 - Document that third-party image URLs can change or be blocked and that use of official images remains subject to rights and site terms.
 
 - Pages deployment is defined on default branch `main` and mirrored on `develop`. `main` pushes and successful `develop` push CI runs trigger a single deployment containing production at `/saizeriya-order/` and preview at `/saizeriya-order/develop/`. Both builds must use their respective Vite base paths. A release to `main` requires a PR and explicit user approval.
+
+- Item records are question-level, keyed by four-digit code. `groupId` + `variantLabel` combine serving-time and wine-color variants into a single gallery card without merging quiz answers.
+- For existing verified records, the collector MUST preserve `imageSource`, `groupId`, `variantLabel`, and `enabled`. Prefer official main photo (`og:image`) instead of rank/combination images.
+- Do not enable drink-bar code 5101 until a suitable official photo has been approved. It stays in the JSON but is hidden from quiz and gallery.
+- Check `pnpm test:dataset` (grouping and photo overrides) in addition to existing checks. Keep Issue #11 open for pending photo reviews.

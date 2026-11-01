@@ -61,9 +61,7 @@ async function loadExisting() {
     const data = JSON.parse(await readFile(dataPath, "utf8"));
     if (!Array.isArray(data)) throw new Error("Invalid menu dataset");
     const entries = data.filter((item) => item && typeof item.code === "string" && /^\d{4}$/.test(item.code));
-    return new Map(entries.map(({ code, name, imageSource, pageUrl }) => [
-      code, { code, name, imageSource, pageUrl },
-    ]));
+    return new Map(entries.map((item) => [item.code, item]));
   } catch (error) {
     if (error.code === "ENOENT") return new Map();
     throw error;
@@ -85,7 +83,9 @@ async function main() {
       const html = await (await fetchOfficial(pageUrl)).text();
       const detail = extractMenuDetail(html, pageUrl);
       if (!detail) throw new Error("No code-matched official photo URL or product title");
-      if (!dryRun) existing.set(code, detail);
+      // Preserve reviewed images, grouped variants and disabled entries.
+      // The scraper is discovery-only for existing manually curated records.
+      if (!dryRun) existing.set(code, { ...detail, ...existing.get(code) });
       fetched++;
       console.log("OK " + detail.code + " " + detail.name);
     } catch (error) {

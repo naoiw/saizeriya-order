@@ -10,6 +10,7 @@ import {
 import DishImage from "./DishImage";
 
 const QUESTION_COUNT = 10;
+const availableQuestions = menuItems.filter((item) => item.enabled !== false);
 type Phase = "ready" | "playing" | "review" | "complete";
 
 export default function Quiz() {
@@ -24,8 +25,8 @@ export default function Quiz() {
   const previousResult = results[index];
 
   const start = () => {
-    if (menuItems.length < QUESTION_COUNT) return;
-    setQuestions(pickQuestions(menuItems, QUESTION_COUNT));
+    if (availableQuestions.length < QUESTION_COUNT) return;
+    setQuestions(pickQuestions(availableQuestions, QUESTION_COUNT));
     setIndex(0);
     setAnswer("");
     setImageFailed(false);
@@ -38,7 +39,7 @@ export default function Quiz() {
     if (submitted !== null && submitted.length !== 4) return;
     const entry: QuizResult = {
       code: current.code,
-      name: current.name,
+      name: current.variantLabel ? current.name + "（" + current.variantLabel + "）" : current.name,
       answer: submitted,
       isCorrect: submitted === current.code,
     };
@@ -96,10 +97,10 @@ export default function Quiz() {
         <p className="lead">料理の写真と商品名を見て、4桁の注文番号を答えてください。</p>
         <div className="intro-stats">
           <div><strong>{QUESTION_COUNT}</strong><span>問 / 1回</span></div>
-          <div><strong>{menuItems.length}</strong><span>登録メニュー</span></div>
+          <div><strong>{availableQuestions.length}</strong><span>登録メニュー</span></div>
         </div>
         <p className="hint-text">毎回ランダムに10問を出題します。回答後に正解を表示し、最後に結果をまとめて確認できます。</p>
-        {menuItems.length < QUESTION_COUNT ? (
+        {availableQuestions.length < QUESTION_COUNT ? (
           <p role="alert" className="warning">開始には10件以上のメニューデータが必要です。</p>
         ) : (
           <button type="button" className="button button-primary start-button" onClick={start}>
@@ -157,6 +158,7 @@ export default function Quiz() {
             loading="eager" onFailure={() => setImageFailed(true)} />
         </div>
         <h1 className="question-name">{current.name}</h1>
+        {current.variantLabel && <p className="question-variant">{current.variantLabel}</p>}
         <p className="question-subtitle">このメニューの注文番号は？</p>
       </div>
 

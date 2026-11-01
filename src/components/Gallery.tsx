@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react";
 import DishImage from "./DishImage";
 import { menuItems } from "../lib/menu";
-import { filterAndSortMenu, type GallerySort } from "../lib/gallery.mjs";
+import { groupMenuItems, filterAndSortMenu, type GallerySort } from "../lib/gallery.mjs";
 
 type Layout = "cards" | "list";
 
@@ -9,9 +9,13 @@ export default function Gallery() {
   const [layout, setLayout] = useState<Layout>("cards");
   const [search, setSearch] = useState("");
   const [sort, setSort] = useState<GallerySort>("code-asc");
+  const entries = useMemo(
+    () => groupMenuItems(menuItems.filter((item) => item.enabled !== false)),
+    [],
+  );
   const visible = useMemo(
-    () => filterAndSortMenu(menuItems, search, sort),
-    [search, sort],
+    () => filterAndSortMenu(entries, search, sort),
+    [entries, search, sort],
   );
 
   return (
@@ -24,7 +28,7 @@ export default function Gallery() {
         <div className="gallery-search">
           <label htmlFor="gallery-search">商品名・注文番号で検索</label>
           <input id="gallery-search" type="search" value={search}
-            placeholder="例：ミラノ風ドリア / 2101"
+            placeholder="例：ミラノ風ドリア / 3901"
             onChange={(event) => setSearch(event.target.value)} />
         </div>
         <div className="gallery-sort">
@@ -40,7 +44,7 @@ export default function Gallery() {
       </div>
 
       <div className="gallery-toolbar">
-        <p className="gallery-count" role="status">{visible.length} / {menuItems.length} 件</p>
+        <p className="gallery-count" role="status">{visible.length} / {entries.length} 件</p>
         <div className="gallery-layout" role="group" aria-label="表示形式">
           <button type="button" className={layout === "cards" ? "is-active" : ""}
             aria-pressed={layout === "cards"} onClick={() => setLayout("cards")}>カード</button>
@@ -60,12 +64,19 @@ export default function Gallery() {
       ) : (
         <div className={"gallery-items " + (layout === "cards" ? "gallery-cards" : "gallery-list")}>
           {visible.map((item) => (
-            <article className="gallery-item" key={item.code}>
+            <article className="gallery-item" key={item.groupId}>
               <div className="gallery-item-photo">
                 <DishImage src={item.imageSource} name={item.name} />
               </div>
               <div className="gallery-item-detail">
-                <span className="gallery-code">{item.code}</span>
+                <div className="gallery-codes" aria-label={item.name + " の注文番号"}>
+                  {item.codes.map((entry) => (
+                    <span className="gallery-code-entry" key={entry.code}>
+                      {entry.label && <small>{entry.label}</small>}
+                      <strong className="gallery-code">{entry.code}</strong>
+                    </span>
+                  ))}
+                </div>
                 <h2>{item.name}</h2>
                 <a href={item.pageUrl} target="_blank" rel="noopener noreferrer">
                   公式ページを見る ↗
@@ -75,7 +86,7 @@ export default function Gallery() {
           ))}
         </div>
       )}
-      <p className="gallery-disclaimer">商品写真はサイゼリヤ公式サイトから直接表示しています。公式サイト側の変更等により表示できない場合があります。</p>
+      <p className="gallery-disclaimer">商品写真はサイゼリヤ公式サイトから直接表示しています。画像確認待ちのドリンクバーは一時的に非表示です。</p>
     </section>
   );
 }

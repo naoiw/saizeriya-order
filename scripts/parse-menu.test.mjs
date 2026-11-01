@@ -39,3 +39,25 @@ test("does not guess an unrelated image", () => {
 test("decodes Japanese title entities without damaging names", () => {
   assert.equal(decodeHtml("トマト&amp;チーズ&#x30FB;パン"), "トマト&チーズ・パン");
 });
+
+test("prefers official main image over numbered ranking images", () => {
+  const html = '<title>アロスティチーニ | サイゼリヤ</title>' +
+    '<meta property="og:image" content="https://www.saizeriya.co.jp/files/%E3%82%A2%E3%83%AD%E3%82%B9%E3%83%86%E3%82%A3%E3%83%81%E3%83%BC%E3%83%8B.webp">' +
+    '<img src="/files/1402_rank.webp">';
+  assert.equal(
+    extractMenuDetail(html, "https://www.saizeriya.co.jp/menu-popular/1402/")?.imageSource,
+    "https://www.saizeriya.co.jp/files/%E3%82%A2%E3%83%AD%E3%82%B9%E3%83%86%E3%82%A3%E3%83%81%E3%83%BC%E3%83%8B.webp",
+  );
+});
+
+test("rejects ranking-only pages instead of treating ranking graphic as dish photo", () => {
+  const html = '<title>パルマ風スパゲッティ | サイゼリヤ</title>' +
+    '<img src="/files/2304_rank.webp"><img src="/files/2304_comb.webp">';
+  assert.equal(extractMenuDetail(html, "https://www.saizeriya.co.jp/menu-popular/2304/"), null);
+});
+
+test("does not accept an untrusted social image URL", () => {
+  const html = '<title>アロスティチーニ | サイゼリヤ</title>' +
+    '<meta content="https://evil.example/files/アロスティチーニ.webp" property="og:image">';
+  assert.equal(extractMenuDetail(html, "https://www.saizeriya.co.jp/menu-popular/1402/"), null);
+});

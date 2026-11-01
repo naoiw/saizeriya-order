@@ -1,0 +1,90 @@
+name: Deploy develop preview to GitHub Pages
+
+# Keep this workflow on the default (main) branch.
+# GitHub evaluates workflow_run listeners from the default branch.
+on:
+  workflow_run:
+    workflows: [CI]
+    branches: [develop]
+    types: [completed]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: saizeriya-order-pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    if: >-
+      github.event_name == 'workflow_dispatch' ||
+      (github.event_name == 'workflow_run' &&
+       github.event.workflow_run.event == 'push' &&
+       github.event.workflow_run.head_branch == 'develop' &&
+       github.event.workflow_run.conclusion == 'success' &&
+       github.event.workflow_run.head_repository.full_name == github.repository)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout validated develop revision
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event_name == 'workflow_run' && github.event.workflow_run.head_sha || 'develop' }}
+          persist-credentials: false
+
+      - name: Set up pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9.14.2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Check dataset and tests
+        run: |
+          pnpm test:collector
+          pnpm test:quiz
+          pnpm test:gallery
+          pnpm check:dataset
+
+      - name: Build develop preview with GitHub Pages base path
+        run: |
+          pnpm exec tsc --noEmit
+          pnpm exec vite build --base=/saizeriya-order/develop/
+
+      - name: Assemble Pages artifact
+        run: |
+          mkdir -p publish/develop
+          cp -a dist/. publish/develop/
+          touch publish/.nojekyll
+          printf '%s\n' \
+            '<!doctype html>' \
+            '<html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>SAIZERIYA ORDER</title></head><body><a href="./develop/">develop preview</a></body></html>' \
+            > publish/index.html
+
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: publish
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: https://naoiw.github.io/saizeriya-order/develop/
+    steps:
+      - name: Deploy develop preview
+        id: deployment
+        uses: actions/deploy-pages@v4

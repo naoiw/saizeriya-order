@@ -15,6 +15,16 @@ pnpm dev
 
 表示されるURL（通常 `http://localhost:5173`）を開きます。画面上部のメニューから「クイズ」と「ギャラリー」を切り替えられます。
 
+## GitHub Pages（developプレビュー）
+
+**[develop版をブラウザで試す](https://naoiw.github.io/saizeriya-order/develop/)**
+
+`develop` へのPushで `CI` の検証（テスト、データセットチェック、ビルド）が成功すると、GitHub ActionsからPagesの `/saizeriya-order/develop/` に自動デプロイされます。 `main` はまだ正式版アプリの公開先ではなく、現段階ではプレビューへのリンクだけを表示します。
+
+GitHubリポジトリの **Settings → Pages → Build and deployment → Source** は **GitHub Actions** に設定してください。デプロイ履歴は [Actions](https://github.com/naoiw/saizeriya-order/actions) で確認できます。
+
+Pages用ビルドをローカルで確認する場合は `pnpm build:pages:develop` を実行してください。通常の `pnpm dev` / `pnpm build` は従来どおり動作します。
+
 ## クイズ
 
 - 登録済みメニューから**重複なしでランダムに10問**出題

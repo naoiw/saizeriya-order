@@ -9,3 +9,5 @@
 - Keep all existing menu entries unless a verified manual cleanup is intentional. Never overwrite the user's collected dataset with a four-item example.
 - Validate changes with `npm run test:collector`, `npm run check:dataset`, and `npm run build`. CI runs these checks.
 - Document that third-party image URLs can change or be blocked and that use of official images remains subject to rights and site terms.
+
+- Preview deployment: `develop` CI success triggers the Pages deployment workflow stored on the default `main` branch. Keep its copy on `develop` in sync with `main`. Preview build must use `/saizeriya-order/develop/` as the Vite base; never publish `main` app without an explicit release decision.

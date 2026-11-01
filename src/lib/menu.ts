@@ -24,7 +24,13 @@ export function validateMenuItems(input: unknown): MenuItem[] {
     ) throw new Error(`Invalid menu data for item ${index}`);
     if (seen.has(value.code)) throw new Error(`Duplicate menu code: ${value.code}`);
     seen.add(value.code);
-    return value as MenuItem;
+    return {
+      code: value.code,
+      name: value.name,
+      image: value.image,
+      imageSource: value.imageSource,
+      pageUrl: value.pageUrl,
+    } as MenuItem;
   });
 }
 

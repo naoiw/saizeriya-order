@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import DishImage from "./DishImage";
 import { drawGacha } from "../lib/gacha.mjs";
 import { menuItems, type MenuItem } from "../lib/menu";
@@ -51,12 +51,6 @@ export default function Gacha() {
     setPicks(next);
   }, []);
 
-  useEffect(() => {
-    // A reload is a fresh draw too; the last five codes survive in this tab
-    // so the entire ordered combination does not recur immediately.
-    roll();
-  }, [roll]);
-
   return (
     <section className="gacha">
       <div className="section-eyebrow">MENU GACHA</div>
@@ -71,7 +65,11 @@ export default function Gacha() {
           <span aria-hidden="true">🎲</span> {picks.length ? "もう一度ガチャを回す" : "ガチャを回す"}
         </button>
         <span className="gacha-counter" role="status">
-          {picks.length ? "抽選結果：5品（重複あり）" : "抽選対象がありません"}
+          {availableItems.length === 0
+            ? "抽選対象がありません"
+            : picks.length > 0
+              ? "抽選結果：5品（重複あり）"
+              : "ボタンを押すと5品を抽選します"}
         </span>
       </div>
       {picks.length > 0 && (
@@ -92,7 +90,7 @@ export default function Gacha() {
         </ol>
       )}
       <p className="gacha-note">
-        抽選対象はクイズと同じ有効メニューです。ページ更新でも引き直します。
+        抽選対象はクイズと同じ有効メニューです。ページ更新後は再びボタンを押すと抽選します。
         直前と5件すべてが同じ順番になることは避けています。
       </p>
     </section>

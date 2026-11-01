@@ -14,7 +14,8 @@
     "test:gallery": "node --test scripts/gallery.test.mjs",
     "build:pages:develop": "tsc --noEmit && vite build --base=/saizeriya-order/develop/",
     "build:pages:main": "tsc --noEmit && vite build --base=/saizeriya-order/",
-    "test:dataset": "node --test scripts/dataset.test.mjs"
+    "test:dataset": "node --test scripts/dataset.test.mjs",
+    "test:gacha": "node --test scripts/gacha.test.mjs"
   },
   "dependencies": {
     "react": "^19.1.0",

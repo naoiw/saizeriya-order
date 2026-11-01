@@ -24,3 +24,16 @@ hardcoding the same size independently. Gallery and quiz implementation
 and the 31-item dataset should not be affected by chrome styling changes.
 
 Preview: https://naoiw.github.io/saizeriya-order/develop/
+
+## Prevent layout shifts when switching modes
+
+Quiz, results, and gallery have different document heights. Reserve a stable
+vertical scrollbar gutter on the root `html` element with
+`scrollbar-gutter: stable`, with `overflow-y: scroll` as a fallback only for
+older browsers that do not support the property. Do not put scrollbar width
+compensation on the centered `.app-shell`, and do not change the shared
+chrome width or green/white color scheme to work around this.
+
+Manual check: switch between Quiz and Gallery on a desktop browser where
+scrollbars are non-overlay, and confirm that the header, navigation, and main
+content stay at the same horizontal position.

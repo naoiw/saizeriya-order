@@ -15,7 +15,7 @@ if (args.includes("--help")) {
   process.exit(0);
 }
 if (args.some((arg, index) =>
-  !["--limit", "--dry-run"].includes(arg) && index !== limitAt + 1
+  !["--limit", "--dry-run"].includes(arg) && (limitAt < 0 || index !== limitAt + 1)
 )) {
   throw new Error("Unknown argument. Use --help.");
 }

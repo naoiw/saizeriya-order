@@ -1,11 +1,11 @@
 import { useCallback, useRef, useState } from "react";
 import DishImage from "./DishImage";
 import { drawGacha } from "../lib/gacha.mjs";
-import { menuItems, type MenuItem } from "../lib/menu";
+import { menuItems, isRegularGachaItem, type MenuItem } from "../lib/menu";
 
 const PICK_COUNT = 5;
 const LAST_DRAW_KEY = "saizeriya-order:last-gacha-v1";
-const availableItems = menuItems.filter((item) => item.enabled !== false);
+const availableItems = menuItems.filter(isRegularGachaItem);
 
 // crypto.getRandomValues uses fresh entropy even for rapid rerolls and F5.
 // Unlike a fixed seed, it cannot replay the same sequence on every reload.
@@ -90,7 +90,7 @@ export default function Gacha() {
         </ol>
       )}
       <p className="gacha-note">
-        抽選対象はクイズと同じ有効メニューです。ページ更新後は再びボタンを押すと抽選します。
+        抽選対象は通常メニューの確認済み注文番号のみです。過去の資料に基づく候補・朝サイゼ・季節商品は除外します。ページ更新後は再びボタンを押すと抽選します。
         直前と5件すべてが同じ順番になることは避けています。
       </p>
     </section>

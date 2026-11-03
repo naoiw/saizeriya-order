@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 import DishImage from "./DishImage";
-import { menuItems } from "../lib/menu";
+import { menuItems, menuNotice } from "../lib/menu";
 import { groupMenuItems, filterAndSortMenu, type GallerySort } from "../lib/gallery.mjs";
 
 type Layout = "cards" | "list";
@@ -78,15 +78,22 @@ export default function Gallery() {
                   ))}
                 </div>
                 <h2>{item.name}</h2>
-                <a href={item.pageUrl} target="_blank" rel="noopener noreferrer">
-                  公式ページを見る ↗
-                </a>
+                {menuNotice(item) && <p className="gallery-menu-notice">{menuNotice(item)}</p>}
+                {item.pageUrl ? (
+                  <a href={item.pageUrl} target="_blank" rel="noopener noreferrer">
+                    公式ページを見る ↗
+                  </a>
+                ) : item.sourceUrl ? (
+                  <a href={item.sourceUrl} target="_blank" rel="noopener noreferrer">
+                    番号の参照資料を見る ↗
+                  </a>
+                ) : null}
               </div>
             </article>
           ))}
         </div>
       )}
-      <p className="gallery-disclaimer">商品写真はサイゼリヤ公式サイトから直接表示しています。画像確認待ちのドリンクバーは一時的に非表示です。</p>
+      <p className="gallery-disclaimer">画像を確認できない商品は「画像なし」で表示します。2026年2月の資料に基づく候補・朝サイゼ・季節商品は、現在の販売状況や対象店舗を確認してください。</p>
     </section>
   );
 }

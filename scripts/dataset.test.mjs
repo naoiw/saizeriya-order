@@ -27,16 +27,60 @@ test("red and white glass wines share a verified official photo and gallery card
   assert.equal(groupMenuItems(active).filter(x=>x.groupId==="3401").length,1);
 });
 
-test("wrong photographs have been replaced and drink bar remains disabled", () => {
+test("incorrect photographs were replaced, and drink bar is playable without a photo", () => {
   for (const code of ["1402","2304"]) {
     assert.doesNotMatch(byCode.get(code).imageSource, /_rank\.webp$/);
   }
-  assert.equal(byCode.get("5101").enabled,false);
-  assert.equal(active.some(x=>x.code==="5101"),false);
+  assert.notEqual(byCode.get("5101").enabled, false);
+  assert.equal(byCode.get("5101").imageSource, undefined);
+  assert.equal(byCode.get("5101").variantLabel, "セット");
+  assert.equal(active.some(x=>x.code==="5101"),true);
 });
 
 test("total active question and gallery group counts stay consistent", () => {
-  assert.equal(items.length,35);
-  assert.equal(active.length,34);
-  assert.equal(groupMenuItems(active).length,31);
+  assert.equal(items.length,114);
+  assert.equal(active.length,114);
+  assert.equal(groupMenuItems(active).length,93);
+});
+
+test("all 70 reference-list codes and 8 official breakfast codes are present", () => {
+  const references = items.filter((x) => x.menuScope === "regular" && x.verification === "reference");
+  const morning = items.filter((x) => x.menuScope === "morning");
+  const seasonal = items.filter((x) => x.menuScope === "seasonal");
+  assert.equal(references.length, 70);
+  assert.equal(morning.length, 8);
+  assert.equal(seasonal.length, 1);
+  assert.equal(byCode.get("3301").name, "生ビール キリン一番搾り");
+  assert.equal(byCode.get("3301").variantLabel, "ジョッキ");
+  assert.equal(byCode.get("3302").variantLabel, "グラス");
+  assert.equal(byCode.get("5605").name, "焼きシナモンフォッカチオ");
+  assert.equal(byCode.get("1302").name, "冷たいパンプキンスープ");
+  for (const code of ["3301", "3403", "3110", "2103", "2306", "3101", "3212", "5605", "1302"]) {
+    assert.ok(byCode.has(code), code + " must be included");
+  }
+});
+
+test("text-only entries remain active and have traceable source links", () => {
+  const noImage = items.filter((x) => !x.imageSource);
+  assert.equal(noImage.length, 80);
+  assert.equal(items.filter((x) => x.imageSource).length, 34);
+  assert.ok(noImage.every((x) => x.enabled !== false));
+  assert.ok(noImage.every((x) => typeof (x.pageUrl ?? x.sourceUrl) === "string"));
+  assert.equal(byCode.get("5101").pageUrl, "https://www.saizeriya.co.jp/menu-popular/5101/");
+});
+
+test("all question labels are unambiguous even without photographs", () => {
+  const display = items.map((x) => x.name + "／" + (x.variantLabel ?? ""));
+  assert.equal(new Set(display).size, items.length);
+  const grouped = groupMenuItems(active);
+  const variants = grouped.find((x) => x.groupId === "3212");
+  assert.deepEqual(variants.codes, [
+    { code: "3212", label: "すぐに" },
+    { code: "3912", label: "あとで" },
+  ]);
+  assert.equal(variants.imageSource, undefined);
+  const morning = grouped.find((x) => x.groupId === "5605");
+  assert.equal(morning.codes.length, 3);
+  const drinkBar = grouped.find((x) => x.groupId === "5101");
+  assert.equal(drinkBar.codes.length, 3);
 });

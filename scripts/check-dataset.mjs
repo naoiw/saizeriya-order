@@ -14,13 +14,13 @@ let missingImages = 0;
 for (const [index, item] of items.entries()) {
   try {
     if (!item || typeof item !== "object" || Array.isArray(item) ||
-        typeof item.code !== "string" || !/^\\d{4}$/.test(item.code) ||
+        typeof item.code !== "string" || !/^\d{4}$/.test(item.code) ||
         typeof item.name !== "string" || !item.name.trim() ||
         (item.imageSource !== undefined && (typeof item.imageSource !== "string" || !item.imageSource.trim())) ||
         (item.pageUrl !== undefined && (typeof item.pageUrl !== "string" || !item.pageUrl.trim())) ||
         (item.sourceUrl !== undefined && (typeof item.sourceUrl !== "string" || !item.sourceUrl.trim())) ||
         (item.pageUrl === undefined && item.sourceUrl === undefined) ||
-        (item.groupId !== undefined && (typeof item.groupId !== "string" || !/^\\d{4}$/.test(item.groupId))) ||
+        (item.groupId !== undefined && (typeof item.groupId !== "string" || !/^\d{4}$/.test(item.groupId))) ||
         (item.variantLabel !== undefined && (typeof item.variantLabel !== "string" || !item.variantLabel.trim())) ||
         (item.menuScope !== undefined && !["regular", "morning", "seasonal"].includes(item.menuScope)) ||
         (item.verification !== undefined && item.verification !== "reference") ||
@@ -32,7 +32,7 @@ for (const [index, item] of items.entries()) {
     if (item.imageSource !== undefined) {
       const img = new URL(item.imageSource);
       if (img.protocol !== "https:" || img.hostname !== "www.saizeriya.co.jp" ||
-          !/^\\/files\\/[^/]+\\.(webp|png|jpe?g)$/i.test(img.pathname)) {
+          !/^\/files\/[^/]+\.(webp|png|jpe?g)$/i.test(img.pathname)) {
         throw new Error("Invalid official image URL");
       }
     } else {

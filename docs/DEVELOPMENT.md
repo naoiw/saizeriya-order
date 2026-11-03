@@ -52,7 +52,7 @@ pnpm build:pages:develop
 | `src/components/DishImage.tsx` | 公式写真の表示と読み込み失敗時の代替UI |
 | `src/lib/quiz.mjs` / `gacha.mjs` / `gallery.mjs` | テスト可能な抽選・採点・ギャラリー処理 |
 | `src/lib/menu.ts` | メニューデータの型と起動時検証 |
-| `src/data/menu.json` | 4桁注文番号をキーとするメニュー情報 |
+| `src/data/menu.json` | 4桁注文番号をキーとするメニュー情報（画像は任意） |
 | `src/styles.css` | 共通レイアウト、各モード、レスポンシブCSS |
 | `scripts/` | メニュー収集、静的検証、テスト |
 | `.github/workflows/` | PR／push時のCI、Pagesデプロイ |
@@ -75,7 +75,7 @@ pnpm test:dataset
 - 収集スクリプトは公式ページを逐次取得する**ネットワーク処理**です。頻繁な繰り返しは避けてください。
 - 既存の手動レビュー済みレコードは収集時に上書きせず、コードにない新規メニューを追加するために使います。
 - 新しい複数番号グループを設定する場合は `src/lib/menu.ts` と `scripts/check-dataset.mjs` にある公式ページの例外対応も確認してください。
-- 画像URLが実際に正しい料理を示すかは静的テストだけでは保証できません。プレビューで目視確認が必要です。
+- 画像URLが実際に正しい料理を示すかは静的テストだけでは保証できません。プレビューで目視確認が必要です。画像不明の場合はURLを推測せず省略してください。参考資料からの候補は `verification: "reference"`、朝は `menuScope: "morning"`、季節は `menuScope: "seasonal"` に区別します。
 
 ## PRとブランチ運用
 

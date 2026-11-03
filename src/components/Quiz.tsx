@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import { menuItems, type MenuItem } from "../lib/menu";
+import { menuItems, menuNotice, type MenuItem } from "../lib/menu";
 import {
   appendDigit,
   backspaceDigit,
@@ -94,7 +94,7 @@ export default function Quiz() {
       <section className="quiz-intro">
         <div className="section-eyebrow">QUIZ MODE</div>
         <h1>注文番号クイズ</h1>
-        <p className="lead">料理の写真と商品名を見て、4桁の注文番号を答えてください。</p>
+        <p className="lead">商品名（画像がある商品は写真も）から、4桁の注文番号を答えてください。</p>
         <div className="intro-stats">
           <div><strong>{QUESTION_COUNT}</strong><span>問 / 1回</span></div>
           <div><strong>{availableQuestions.length}</strong><span>登録メニュー</span></div>
@@ -159,6 +159,7 @@ export default function Quiz() {
         </div>
         <h1 className="question-name">{current.name}</h1>
         {current.variantLabel && <p className="question-variant">{current.variantLabel}</p>}
+        {menuNotice(current) && <p className="menu-notice">{menuNotice(current)}</p>}
         <p className="question-subtitle">このメニューの注文番号は？</p>
       </div>
 

@@ -13,9 +13,14 @@ export function groupMenuItems(items) {
       name: item.name,
       imageSource: item.imageSource,
       pageUrl: item.pageUrl,
+      sourceUrl: item.sourceUrl,
+      menuScope: item.menuScope,
+      verification: item.verification,
       codes: [],
     });
-    groups.get(groupId).codes.push({ code: item.code, label: item.variantLabel ?? "" });
+    const entry = groups.get(groupId);
+    if (item.verification === "reference") entry.verification = "reference";
+    entry.codes.push({ code: item.code, label: item.variantLabel ?? "" });
   }
   return [...groups.values()];
 }

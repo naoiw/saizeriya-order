@@ -269,3 +269,8 @@ h2 { font-size: 18px }
   .app-shell:has(.quiz-play) .site-footer { display: none; }
   .quiz-play .keyboard-hint { display: none; }
 }
+
+/* Text-only menu records can be played without a verified product photo. */
+.dish-image-missing span:first-child { font-size: 17px; opacity: 1; font-weight: 760; color: #6b7e70; }
+.menu-notice { font-size: 11px; line-height: 1.5; color: #93612d; margin: 4px 0 7px; }
+.gallery-menu-notice { font-size: 11px; line-height: 1.5; color: #93612d; margin: -6px 0 10px; }

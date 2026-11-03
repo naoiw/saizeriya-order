@@ -20,3 +20,7 @@
 - The quiz is five questions per round. The Gacha mode is five draws **with replacement** from enabled order codes (not grouped gallery cards), so duplicates and distinct variants are intentional.
 - Gacha uses browser crypto randomness (not a fixed clock seed), and stores the immediately preceding ordered draw in tab-scoped sessionStorage to avoid an identical reroll/reload. Keep the algorithm testable by accepting an injected random callback.
 - Compact mobile styling applies only to `.quiz-play`. Do not set `overflow: hidden` on body or alter shared chrome tokens; ensure small screens remain scrollable if content genuinely exceeds the viewport.
+
+- The menu dataset includes 114 records: 35 existing + 70 February 2026 references + 8 official breakfast numbers + 1 seasonal soup. Keep the source notes and tests in sync with changes.
+- `imageSource` is optional; never invent image URLs. A missing image must be shown as exactly **画像なし** and remain quiz-playable. Only real image load errors can show a skip action.
+- `verification: "reference"` means a historical menu code not yet verified as currently available. `menuScope: "morning"` / `"seasonal"` distinguish limited menus. The order-oriented Gacha excludes these until reviewed.

@@ -14,7 +14,7 @@
 
 - Item records are question-level, keyed by four-digit code. `groupId` + `variantLabel` combine serving-time and wine-color variants into a single gallery card without merging quiz answers.
 - For existing verified records, the collector MUST preserve `imageSource`, `groupId`, `variantLabel`, and `enabled`. Prefer official main photo (`og:image`) instead of rank/combination images.
-- Do not enable drink-bar code 5101 until a suitable official photo has been approved. It stays in the JSON but is hidden from quiz and gallery.
+- Code 5101 is enabled with no photo; display 「画像なし」 rather than an inaccurate image. Photo verification remains a follow-up in Issue #11.
 - Check `pnpm test:dataset` (grouping and photo overrides) in addition to existing checks. Keep Issue #11 open for pending photo reviews.
 
 - The quiz is five questions per round. The Gacha mode is five draws **with replacement** from enabled order codes (not grouped gallery cards), so duplicates and distinct variants are intentional.
@@ -23,4 +23,4 @@
 
 - The menu dataset includes 114 records: 35 existing + 70 February 2026 references + 8 official breakfast numbers + 1 seasonal soup. Keep the source notes and tests in sync with changes.
 - `imageSource` is optional; never invent image URLs. A missing image must be shown as exactly **画像なし** and remain quiz-playable. Only real image load errors can show a skip action.
-- `verification: "reference"` means a historical menu code not yet verified as currently available. `menuScope: "morning"` / `"seasonal"` distinguish limited menus. The order-oriented Gacha excludes these until reviewed.
+- `verification: "reference"` means a historical menu code not yet verified as currently available. `menuScope: "morning"` / `"seasonal"` distinguish limited menus. **Gacha uses all enabled codes just like Quiz, including reference and limited menus and image-less records**; show per-result availability notices and never promise these can be ordered at a given store.

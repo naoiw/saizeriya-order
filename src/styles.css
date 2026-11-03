@@ -274,3 +274,6 @@ h2 { font-size: 18px }
 .dish-image-missing span:first-child { font-size: 17px; opacity: 1; font-weight: 760; color: #6b7e70; }
 .menu-notice { font-size: 11px; line-height: 1.5; color: #93612d; margin: 4px 0 7px; }
 .gallery-menu-notice { font-size: 11px; line-height: 1.5; color: #93612d; margin: -6px 0 10px; }
+
+/* Label unverified / limited availability on gacha results as in quiz and gallery. */
+.gacha-menu-notice { color: #93612d; font-size: 11px; line-height: 1.45; }

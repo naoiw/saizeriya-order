@@ -1,3 +1,8 @@
+/** Use the same enabled order-code pool as the quiz, including entries without images. */
+export function getGachaCandidates(items) {
+  return items.filter((item) => item.enabled !== false);
+}
+
 /**
  * Independent draws with replacement: a product may appear multiple times.
  * Input is already filtered to enabled order codes by the caller.

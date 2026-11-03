@@ -30,14 +30,6 @@ export function menuNotice(item: Pick<MenuItem, "menuScope" | "verification">): 
   return null;
 }
 
-export function isRegularGachaItem(
-  item: Pick<MenuItem, "menuScope" | "verification" | "enabled">,
-): boolean {
-  return item.enabled !== false &&
-    (item.menuScope === undefined || item.menuScope === "regular") &&
-    item.verification !== "reference";
-}
-
 export function validateMenuItems(input: unknown): MenuItem[] {
   if (!Array.isArray(input)) throw new Error("Menu dataset must be an array");
   const seenCodes = new Set<string>();

@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { drawGacha } from "../src/lib/gacha.mjs";
+import { drawGacha, getGachaCandidates } from "../src/lib/gacha.mjs";
+import { readFile } from "node:fs/promises";
 
 const dishes = [
   { code: "1001", name: "A" },
@@ -46,4 +47,39 @@ test("rejects empty data, invalid counts and random values", () => {
   for (const invalid of [-0.1, 1, NaN, Infinity]) {
     assert.throws(() => drawGacha(dishes, 5, () => invalid), RangeError);
   }
+});
+
+const registeredMenu = JSON.parse(await readFile(
+  new URL("../src/data/menu.json", import.meta.url), "utf8",
+));
+
+test("gacha includes all 114 enabled quiz codes, including 80 without images", () => {
+  const before = structuredClone(registeredMenu);
+  const eligible = getGachaCandidates(registeredMenu);
+  assert.equal(eligible.length, 114);
+  assert.equal(eligible.filter((item) => !item.imageSource).length, 80);
+  assert.deepEqual(eligible.map((item) => item.code), registeredMenu.map((item) => item.code));
+  assert.deepEqual(registeredMenu, before);
+});
+
+test("historical, breakfast and seasonal text-only items can all be drawn", () => {
+  const eligible = getGachaCandidates(registeredMenu);
+  for (const code of ["3301", "3403", "5102", "5605", "1302"]) {
+    const index = eligible.findIndex((item) => item.code === code);
+    assert.ok(index >= 0, code + " must be available to the gacha");
+    const selected = drawGacha(eligible, 5, () => (index + 0.5) / eligible.length);
+    assert.deepEqual(selected.map((item) => item.code), Array(5).fill(code));
+    assert.ok(selected.every((item) => !item.imageSource), code + " should show 画像なし");
+  }
+});
+
+test("only explicitly disabled items are excluded from the gacha", () => {
+  const eligible = getGachaCandidates([
+    { code: "0001", enabled: false, name: "disabled" },
+    { code: "0002", verification: "reference", name: "past menu" },
+    { code: "0003", menuScope: "morning", name: "breakfast" },
+    { code: "0004", menuScope: "seasonal", name: "seasonal" },
+    { code: "0005", name: "regular" },
+  ]);
+  assert.deepEqual(eligible.map((item) => item.code), ["0002", "0003", "0004", "0005"]);
 });

@@ -1,7 +1,7 @@
 name: Deploy GitHub Pages
 
-# This workflow must exist on the default branch for workflow_run to trigger.
-# A single artifact serves main at / and develop at /develop/.
+# Preserve the existing combined production + develop preview site.
+# The workflow_run listener becomes active only once this file is on main.
 on:
   push:
     branches: [main]
@@ -14,99 +14,26 @@ on:
 permissions:
   contents: read
 
-concurrency:
-  group: saizeriya-order-pages
-  cancel-in-progress: false
-
 jobs:
-  build:
+  pages:
     if: >-
-      (github.event_name == 'push' && github.ref == 'refs/heads/main') ||
-      (github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main') ||
-      (github.event_name == 'workflow_run' &&
-       github.event.workflow_run.event == 'push' &&
-       github.event.workflow_run.head_branch == 'develop' &&
-       github.event.workflow_run.conclusion == 'success' &&
-       github.event.workflow_run.head_repository.full_name == github.repository)
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout production
-        uses: actions/checkout@v4
-        with:
-          ref: main
-          path: production
-          persist-credentials: false
-
-      - name: Checkout preview
-        uses: actions/checkout@v4
-        with:
-          ref: ${{ github.event_name == 'workflow_run' && github.event.workflow_run.head_sha || 'develop' }}
-          path: preview
-          persist-credentials: false
-
-      - name: Set up pnpm
-        uses: pnpm/action-setup@v4
-        with:
-          version: 9.14.2
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '22'
-          cache: pnpm
-          cache-dependency-path: |
-            production/pnpm-lock.yaml
-            preview/pnpm-lock.yaml
-
-      - name: Install and check production
-        working-directory: production
-        run: |
-          pnpm install --frozen-lockfile
-          pnpm test:collector
-          pnpm test:quiz
-          pnpm test:gallery
-          pnpm check:dataset
-
-      - name: Build production
-        working-directory: production
-        run: pnpm build:pages:main
-
-      - name: Install and check preview
-        working-directory: preview
-        run: |
-          pnpm install --frozen-lockfile
-          pnpm test:collector
-          pnpm test:quiz
-          pnpm test:gallery
-          pnpm check:dataset
-
-      - name: Build preview
-        working-directory: preview
-        run: pnpm build:pages:develop
-
-      - name: Assemble Pages artifact
-        run: |
-          mkdir -p publish/develop
-          cp -a production/dist/. publish/
-          cp -a preview/dist/. publish/develop/
-          touch publish/.nojekyll
-
-      - uses: actions/configure-pages@v5
-
-      - uses: actions/upload-pages-artifact@v3
-        with:
-          path: publish
-
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
+      ${{
+        github.event_name != 'workflow_run' ||
+        (github.event.workflow_run.conclusion == 'success' &&
+         github.event.workflow_run.event == 'push' &&
+         github.event.workflow_run.head_branch == 'develop' &&
+         github.event.workflow_run.head_repository.full_name == github.repository)
+      }}
     permissions:
+      contents: read
       pages: write
       id-token: write
-    environment:
-      name: github-pages
-      url: https://naoiw.github.io/saizeriya-order/
-    steps:
-      - name: Deploy production and preview
-        id: deployment
-        uses: actions/deploy-pages@v4
+    uses: naoiw/.github/.github/workflows/reusable-vite-pages.yml@00047e65d7e53551e2644df02d2f22743ea2c471
+    with:
+      package-manager: pnpm
+      node-version: "26"
+      pnpm-version: "9.14.2"
+      build-script: build
+      publish-preview: true
+      preview-branch: develop
+      preview-subpath: develop

@@ -56,3 +56,20 @@ test("groups dessert serving-time variants and glass wine color variants", () =>
   assert.equal(filterAndSortMenu(groups, "あとで").length, 1);
   assert.equal(samples.length, 4);
 });
+
+test("groups text-only menu entries and propagates reference status", () => {
+  const inputs = [
+    { code: "5101", name: "ドリンクバー", groupId: "5101",
+      variantLabel: "セット", pageUrl: "https://www.saizeriya.co.jp/menu-popular/5101/" },
+    { code: "5102", name: "ドリンクバー", groupId: "5101", variantLabel: "キッズ",
+      verification: "reference", pageUrl: "https://www.saizeriya.co.jp/menu-popular/5101/" },
+    { code: "5103", name: "ドリンクバー", groupId: "5101", variantLabel: "単品",
+      verification: "reference", pageUrl: "https://www.saizeriya.co.jp/menu-popular/5101/" },
+  ];
+  const groups = groupMenuItems(inputs);
+  assert.equal(groups.length, 1);
+  assert.equal(groups[0].imageSource, undefined);
+  assert.equal(groups[0].codes.length, 3);
+  assert.equal(groups[0].verification, "reference");
+  assert.equal(filterAndSortMenu(groups, "５１０２").length, 1);
+});

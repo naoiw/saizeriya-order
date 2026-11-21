@@ -1,6 +1,8 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { drawGacha } from "../src/lib/gacha.mjs";
+import { drawGacha, getGachaCandidates } from "../src/lib/gacha.mjs";
+import { getPlayableMenuItems } from "../src/lib/menu-availability.mjs";
+import { readFile } from "node:fs/promises";
 
 const dishes = [
   { code: "1001", name: "A" },
@@ -46,4 +48,48 @@ test("rejects empty data, invalid counts and random values", () => {
   for (const invalid of [-0.1, 1, NaN, Infinity]) {
     assert.throws(() => drawGacha(dishes, 5, () => invalid), RangeError);
   }
+});
+
+const registeredMenu = JSON.parse(await readFile(
+  new URL("../src/data/menu.json", import.meta.url), "utf8",
+));
+
+
+test("quiz and gacha use the same 105 regular menu codes, including image-less entries", () => {
+  const original = structuredClone(registeredMenu);
+  const eligible = getGachaCandidates(registeredMenu);
+  const quizEligible = getPlayableMenuItems(registeredMenu);
+  assert.equal(eligible.length, 105);
+  assert.equal(eligible.filter((item) => !item.imageSource).length, 71);
+  assert.deepEqual(eligible, quizEligible);
+  assert.equal(eligible.filter((item) => item.verification === "reference").length, 70);
+  assert.deepEqual(registeredMenu, original);
+});
+
+test("regular photo-less items can be selected while limited menus cannot", () => {
+  const eligible = getGachaCandidates(registeredMenu);
+  for (const code of ["3301", "3403", "5101", "5102", "3101"]) {
+    const index = eligible.findIndex((item) => item.code === code);
+    assert.ok(index >= 0, code + " must be available");
+    const picked = drawGacha(eligible, 5, () => (index + 0.5) / eligible.length);
+    assert.deepEqual(picked.map((item) => item.code), Array(5).fill(code));
+    assert.ok(picked.every((item) => !item.imageSource), code + " shows image-less placeholder");
+  }
+  for (const code of ["1302", "5605", "5606", "5627"]) {
+    assert.ok(!eligible.some((item) => item.code === code), code + " must be excluded");
+  }
+});
+
+test("disabled, morning, seasonal and store-limited records are excluded", () => {
+  const input = [
+    { code: "0001", enabled: false, name: "disabled" },
+    { code: "0002", verification: "reference", name: "past regular menu" },
+    { code: "0003", menuScope: "morning", name: "breakfast" },
+    { code: "0004", menuScope: "seasonal", name: "seasonal" },
+    { code: "0005", menuScope: "store", name: "store exclusive" },
+    { code: "0006", menuScope: "regular", name: "regular" },
+    { code: "0007", name: "no image" },
+  ];
+  assert.deepEqual(getPlayableMenuItems(input).map((x) => x.code), ["0002", "0006", "0007"]);
+  assert.deepEqual(getGachaCandidates(input), getPlayableMenuItems(input));
 });

@@ -6,6 +6,34 @@
     "pageUrl": "https://www.saizeriya.co.jp/menu-popular/1202/"
   },
   {
+    "code": "1205",
+    "name": "わかめのサラダ",
+    "verification": "reference",
+    "sourceUrl": "https://www.umenu.jp/menus/18.html",
+    "menuScope": "regular"
+  },
+  {
+    "code": "1209",
+    "name": "チキンのサラダ",
+    "verification": "reference",
+    "sourceUrl": "https://www.umenu.jp/menus/18.html",
+    "menuScope": "regular"
+  },
+  {
+    "code": "1301",
+    "name": "コーンクリームスープ",
+    "verification": "reference",
+    "sourceUrl": "https://www.umenu.jp/menus/18.html",
+    "menuScope": "regular"
+  },
+  {
+    "code": "1302",
+    "name": "冷たいパンプキンスープ",
+    "menuScope": "seasonal",
+    "verification": "reference",
+    "pageUrl": "https://www.saizeriya.co.jp/menu-popular/1302/"
+  },
+  {
     "code": "1305",
     "name": "田舎風ミネストローネ",
     "imageSource": "https://www.saizeriya.co.jp/files/1305_%E3%83%9F%E3%83%8D%E3%82%B9%E3%83%88%E3%83%AD%E3%83%BC%E3%83%8D.webp",
@@ -36,10 +64,24 @@
     "pageUrl": "https://www.saizeriya.co.jp/menu-popular/1403/"
   },
   {
+    "code": "1404",
+    "name": "ポップコーンシュリンプ",
+    "verification": "reference",
+    "sourceUrl": "https://www.umenu.jp/menus/18.html",
+    "menuScope": "regular"
+  },
+  {
     "code": "1405",
     "name": "エスカルゴのオーブン焼き",
     "imageSource": "https://www.saizeriya.co.jp/files/1405_%E3%82%A8%E3%82%B9%E3%82%AB%E3%83%AB%E3%82%B4%E3%81%AE%E3%82%AA%E3%83%BC%E3%83%96%E3%83%B3%E7%84%BC%E3%81%8D.webp",
     "pageUrl": "https://www.saizeriya.co.jp/menu-popular/1405/"
+  },
+  {
+    "code": "1406",
+    "name": "小エビのカクテル",
+    "verification": "reference",
+    "sourceUrl": "https://www.umenu.jp/menus/18.html",
+    "menuScope": "regular"
   },
   {
     "code": "1407",
@@ -48,10 +90,52 @@
     "pageUrl": "https://www.saizeriya.co.jp/menu-popular/1407/"
   },
   {
+    "code": "1408",
+    "name": "蒸し鶏の香味ソース",
+    "verification": "reference",
+    "sourceUrl": "https://www.umenu.jp/menus/18.html",
+    "menuScope": "regular"
+  },
+  {
     "code": "1410",
     "name": "ムール貝のガーリック焼き",
     "imageSource": "https://www.saizeriya.co.jp/files/1410_%E3%83%A0%E3%83%BC%E3%83%AB%E8%B2%9D%E3%81%AE%E3%82%AC%E3%83%BC%E3%83%AA%E3%83%83%E3%82%AF%E7%84%BC%E3%81%8D.webp",
     "pageUrl": "https://www.saizeriya.co.jp/menu-popular/1410/"
+  },
+  {
+    "code": "1413",
+    "name": "キャロットラペ",
+    "verification": "reference",
+    "sourceUrl": "https://www.umenu.jp/menus/18.html",
+    "menuScope": "regular"
+  },
+  {
+    "code": "1416",
+    "name": "ポテトのグリル",
+    "verification": "reference",
+    "sourceUrl": "https://www.umenu.jp/menus/18.html",
+    "menuScope": "regular"
+  },
+  {
+    "code": "1417",
+    "name": "バッファローモッツァレラのカプレーゼ",
+    "verification": "reference",
+    "sourceUrl": "https://www.umenu.jp/menus/18.html",
+    "menuScope": "regular"
+  },
+  {
+    "code": "1422",
+    "name": "生ハム",
+    "verification": "reference",
+    "sourceUrl": "https://www.umenu.jp/menus/18.html",
+    "menuScope": "regular"
+  },
+  {
+    "code": "1423",
+    "name": "生ハムとバッファローモッツァレラの盛合せ",
+    "verification": "reference",
+    "sourceUrl": "https://www.umenu.jp/menus/18.html",
+    "menuScope": "regular"
   },
   {
     "code": "1425",
@@ -60,10 +144,45 @@
     "pageUrl": "https://www.saizeriya.co.jp/menu-popular/1425/"
   },
   {
+    "code": "1452",
+    "name": "アロスティチーニ Wサイズ",
+    "verification": "reference",
+    "sourceUrl": "https://www.umenu.jp/menus/18.html",
+    "menuScope": "regular"
+  },
+  {
     "code": "2101",
     "name": "ミラノ風ドリア",
     "imageSource": "https://www.saizeriya.co.jp/files/2101_%E3%83%9F%E3%83%A9%E3%83%8E%E9%A2%A8%E3%83%89%E3%83%AA%E3%82%A2-1.webp",
     "pageUrl": "https://www.saizeriya.co.jp/menu-popular/2101/"
+  },
+  {
+    "code": "2103",
+    "name": "半熟卵のミラノ風ドリア",
+    "verification": "reference",
+    "sourceUrl": "https://www.umenu.jp/menus/18.html",
+    "menuScope": "regular"
+  },
+  {
+    "code": "2108",
+    "name": "焼チーズ ミラノ風ドリア",
+    "verification": "reference",
+    "sourceUrl": "https://www.umenu.jp/menus/18.html",
+    "menuScope": "regular"
+  },
+  {
+    "code": "2110",
+    "name": "タラコとポップコーンシュリンプのドリア",
+    "verification": "reference",
+    "sourceUrl": "https://www.umenu.jp/menus/18.html",
+    "menuScope": "regular"
+  },
+  {
+    "code": "2115",
+    "name": "ポップコーンシュリンプとタラコのクリームグラタン",
+    "verification": "reference",
+    "sourceUrl": "https://www.umenu.jp/menus/18.html",
+    "menuScope": "regular"
   },
   {
     "code": "2203",
@@ -76,6 +195,20 @@
     "name": "野菜ときのこのピザ",
     "imageSource": "https://www.saizeriya.co.jp/files/2204_%E9%87%8E%E8%8F%9C%E3%81%A8%E3%81%8D%E3%81%AE%E3%81%93%E3%81%AE%E3%83%94%E3%82%B6.webp",
     "pageUrl": "https://www.saizeriya.co.jp/menu-popular/2204/"
+  },
+  {
+    "code": "2206",
+    "name": "たっぷりコーンのピザ",
+    "verification": "reference",
+    "sourceUrl": "https://www.umenu.jp/menus/18.html",
+    "menuScope": "regular"
+  },
+  {
+    "code": "2208",
+    "name": "ソーセージピザ",
+    "verification": "reference",
+    "sourceUrl": "https://www.umenu.jp/menus/18.html",
+    "menuScope": "regular"
   },
   {
     "code": "2301",
@@ -102,6 +235,55 @@
     "pageUrl": "https://www.saizeriya.co.jp/menu-popular/2305/"
   },
   {
+    "code": "2306",
+    "name": "ミートソース ボロニア風",
+    "verification": "reference",
+    "sourceUrl": "https://www.umenu.jp/menus/18.html",
+    "menuScope": "regular"
+  },
+  {
+    "code": "2310",
+    "name": "スープ入り塩味ボンゴレ",
+    "verification": "reference",
+    "sourceUrl": "https://www.umenu.jp/menus/18.html",
+    "menuScope": "regular"
+  },
+  {
+    "code": "2316",
+    "name": "半熟卵のミートソース ボロニア風",
+    "verification": "reference",
+    "sourceUrl": "https://www.umenu.jp/menus/18.html",
+    "menuScope": "regular"
+  },
+  {
+    "code": "2317",
+    "name": "半熟卵のペペロンチーノ",
+    "verification": "reference",
+    "sourceUrl": "https://www.umenu.jp/menus/18.html",
+    "menuScope": "regular"
+  },
+  {
+    "code": "2318",
+    "name": "半熟卵のカルボナーラ",
+    "verification": "reference",
+    "sourceUrl": "https://www.umenu.jp/menus/18.html",
+    "menuScope": "regular"
+  },
+  {
+    "code": "2320",
+    "name": "小エビのタラコソース",
+    "verification": "reference",
+    "sourceUrl": "https://www.umenu.jp/menus/18.html",
+    "menuScope": "regular"
+  },
+  {
+    "code": "2321",
+    "name": "きのことほうれん草のクリームスパゲッティ",
+    "verification": "reference",
+    "sourceUrl": "https://www.umenu.jp/menus/18.html",
+    "menuScope": "regular"
+  },
+  {
     "code": "2325",
     "name": "ペンネアラビアータ",
     "imageSource": "https://www.saizeriya.co.jp/files/2325_%E3%83%9A%E3%83%B3%E3%83%8D%E3%82%A2%E3%83%A9%E3%83%93%E3%82%A2%E3%83%BC%E3%82%BF.webp",
@@ -120,6 +302,20 @@
     "pageUrl": "https://www.saizeriya.co.jp/menu-popular/2402/"
   },
   {
+    "code": "2403",
+    "name": "イタリアンハンバーグ",
+    "verification": "reference",
+    "sourceUrl": "https://www.umenu.jp/menus/18.html",
+    "menuScope": "regular"
+  },
+  {
+    "code": "2404",
+    "name": "柔らかチキンのチーズ焼き",
+    "verification": "reference",
+    "sourceUrl": "https://www.umenu.jp/menus/18.html",
+    "menuScope": "regular"
+  },
+  {
     "code": "2406",
     "name": "ハンバーグステーキ",
     "imageSource": "https://www.saizeriya.co.jp/files/2406_%E3%83%8F%E3%83%B3%E3%83%90%E3%83%BC%E3%82%B0%E3%82%B9%E3%83%86%E3%83%BC%E3%82%AD.webp",
@@ -132,11 +328,97 @@
     "pageUrl": "https://www.saizeriya.co.jp/menu-popular/2407/"
   },
   {
+    "code": "2417",
+    "name": "ラム(仔羊)のランプステーキ",
+    "verification": "reference",
+    "sourceUrl": "https://www.umenu.jp/menus/18.html",
+    "menuScope": "regular"
+  },
+  {
+    "code": "2418",
+    "name": "ミックスグリル",
+    "verification": "reference",
+    "sourceUrl": "https://www.umenu.jp/menus/18.html",
+    "menuScope": "regular"
+  },
+  {
+    "code": "2419",
+    "name": "ビーフステーキ",
+    "verification": "reference",
+    "sourceUrl": "https://www.umenu.jp/menus/18.html",
+    "menuScope": "regular"
+  },
+  {
+    "code": "3101",
+    "name": "ライス",
+    "verification": "reference",
+    "sourceUrl": "https://www.umenu.jp/menus/18.html",
+    "menuScope": "regular"
+  },
+  {
+    "code": "3102",
+    "name": "ラージライス",
+    "verification": "reference",
+    "sourceUrl": "https://www.umenu.jp/menus/18.html",
+    "menuScope": "regular"
+  },
+  {
+    "code": "3103",
+    "name": "スモールライス",
+    "verification": "reference",
+    "sourceUrl": "https://www.umenu.jp/menus/18.html",
+    "menuScope": "regular"
+  },
+  {
+    "code": "3110",
+    "name": "フォッカチオ",
+    "verification": "reference",
+    "sourceUrl": "https://www.umenu.jp/menus/18.html",
+    "menuScope": "regular"
+  },
+  {
+    "code": "3111",
+    "name": "ガーリックフォッカチオ",
+    "verification": "reference",
+    "sourceUrl": "https://www.umenu.jp/menus/18.html",
+    "menuScope": "regular"
+  },
+  {
+    "code": "3112",
+    "name": "シナモンフォッカチオ",
+    "verification": "reference",
+    "sourceUrl": "https://www.umenu.jp/menus/18.html",
+    "menuScope": "regular"
+  },
+  {
+    "code": "3113",
+    "name": "タラコフォッカチオ",
+    "verification": "reference",
+    "sourceUrl": "https://www.umenu.jp/menus/18.html",
+    "menuScope": "regular"
+  },
+  {
+    "code": "3114",
+    "name": "チーズフォッカチオ",
+    "verification": "reference",
+    "sourceUrl": "https://www.umenu.jp/menus/18.html",
+    "menuScope": "regular"
+  },
+  {
     "code": "3201",
     "name": "ティラミス クラシコ",
     "imageSource": "https://www.saizeriya.co.jp/files/3201_%E3%83%86%E3%82%A3%E3%83%A9%E3%83%9F%E3%82%B9%E3%82%AF%E3%83%A9%E3%82%B7%E3%82%B3.webp",
     "pageUrl": "https://www.saizeriya.co.jp/menu-popular/3201/",
     "groupId": "3201",
+    "variantLabel": "すぐに"
+  },
+  {
+    "code": "3205",
+    "name": "ミルクジェラート",
+    "verification": "reference",
+    "sourceUrl": "https://www.umenu.jp/menus/18.html",
+    "menuScope": "regular",
+    "groupId": "3205",
     "variantLabel": "すぐに"
   },
   {
@@ -146,6 +428,99 @@
     "pageUrl": "https://www.saizeriya.co.jp/menu-popular/3206/",
     "groupId": "3206",
     "variantLabel": "すぐに"
+  },
+  {
+    "code": "3207",
+    "name": "チョコレートケーキ",
+    "verification": "reference",
+    "sourceUrl": "https://www.umenu.jp/menus/18.html",
+    "menuScope": "regular",
+    "groupId": "3207",
+    "variantLabel": "すぐに"
+  },
+  {
+    "code": "3212",
+    "name": "プリンとティラミス クラシコの盛合せ",
+    "verification": "reference",
+    "sourceUrl": "https://www.umenu.jp/menus/18.html",
+    "menuScope": "regular",
+    "groupId": "3212",
+    "variantLabel": "すぐに"
+  },
+  {
+    "code": "3213",
+    "name": "トリフアイスクリーム",
+    "verification": "reference",
+    "sourceUrl": "https://www.umenu.jp/menus/18.html",
+    "menuScope": "regular",
+    "groupId": "3213",
+    "variantLabel": "すぐに"
+  },
+  {
+    "code": "3214",
+    "name": "ジェラート＆シナモンフォッカチオ",
+    "verification": "reference",
+    "sourceUrl": "https://www.umenu.jp/menus/18.html",
+    "menuScope": "regular",
+    "groupId": "3214",
+    "variantLabel": "すぐに"
+  },
+  {
+    "code": "3215",
+    "name": "コーヒーゼリー＆ミルクジェラート",
+    "verification": "reference",
+    "sourceUrl": "https://www.umenu.jp/menus/18.html",
+    "menuScope": "regular",
+    "groupId": "3215",
+    "variantLabel": "すぐに"
+  },
+  {
+    "code": "3216",
+    "name": "チョコレートケーキ＆ミルクジェラート",
+    "verification": "reference",
+    "sourceUrl": "https://www.umenu.jp/menus/18.html",
+    "menuScope": "regular",
+    "groupId": "3216",
+    "variantLabel": "すぐに"
+  },
+  {
+    "code": "3301",
+    "name": "生ビール キリン一番搾り",
+    "verification": "reference",
+    "sourceUrl": "https://www.umenu.jp/menus/18.html",
+    "menuScope": "regular",
+    "groupId": "3301",
+    "variantLabel": "ジョッキ"
+  },
+  {
+    "code": "3302",
+    "name": "生ビール キリン一番搾り",
+    "verification": "reference",
+    "sourceUrl": "https://www.umenu.jp/menus/18.html",
+    "menuScope": "regular",
+    "groupId": "3301",
+    "variantLabel": "グラス"
+  },
+  {
+    "code": "3303",
+    "name": "ノンアルコールビール アサヒドライゼロ",
+    "verification": "reference",
+    "sourceUrl": "https://www.umenu.jp/menus/18.html",
+    "menuScope": "regular"
+  },
+  {
+    "code": "3304",
+    "name": "キリン 氷結 シチリア産レモン",
+    "verification": "reference",
+    "sourceUrl": "https://www.umenu.jp/menus/18.html",
+    "menuScope": "regular"
+  },
+  {
+    "code": "3306",
+    "name": "グラッパ 30ml",
+    "verification": "reference",
+    "sourceUrl": "https://www.umenu.jp/menus/18.html",
+    "menuScope": "regular"
   },
   {
     "code": "3401",
@@ -161,6 +536,60 @@
     "imageSource": "https://www.saizeriya.co.jp/files/PC_%E3%82%B0%E3%83%A9%E3%82%B9%E3%83%AF%E3%82%A4%E3%83%B3_%E3%83%A1%E3%82%A4%E3%83%B3.webp",
     "pageUrl": "https://www.saizeriya.co.jp/menu-popular/3401_0402/",
     "groupId": "3401",
+    "variantLabel": "白"
+  },
+  {
+    "code": "3403",
+    "name": "デカンタ小 250ml",
+    "verification": "reference",
+    "sourceUrl": "https://www.umenu.jp/menus/18.html",
+    "menuScope": "regular",
+    "groupId": "3403",
+    "variantLabel": "赤"
+  },
+  {
+    "code": "3404",
+    "name": "デカンタ小 250ml",
+    "verification": "reference",
+    "sourceUrl": "https://www.umenu.jp/menus/18.html",
+    "menuScope": "regular",
+    "groupId": "3403",
+    "variantLabel": "白"
+  },
+  {
+    "code": "3405",
+    "name": "デカンタ大 500ml",
+    "verification": "reference",
+    "sourceUrl": "https://www.umenu.jp/menus/18.html",
+    "menuScope": "regular",
+    "groupId": "3405",
+    "variantLabel": "赤"
+  },
+  {
+    "code": "3406",
+    "name": "デカンタ大 500ml",
+    "verification": "reference",
+    "sourceUrl": "https://www.umenu.jp/menus/18.html",
+    "menuScope": "regular",
+    "groupId": "3405",
+    "variantLabel": "白"
+  },
+  {
+    "code": "3407",
+    "name": "マグナム 1500ml",
+    "verification": "reference",
+    "sourceUrl": "https://www.umenu.jp/menus/18.html",
+    "menuScope": "regular",
+    "groupId": "3407",
+    "variantLabel": "赤"
+  },
+  {
+    "code": "3408",
+    "name": "マグナム 1500ml",
+    "verification": "reference",
+    "sourceUrl": "https://www.umenu.jp/menus/18.html",
+    "menuScope": "regular",
+    "groupId": "3407",
     "variantLabel": "白"
   },
   {
@@ -208,6 +637,15 @@
     "variantLabel": "あとで"
   },
   {
+    "code": "3905",
+    "name": "ミルクジェラート",
+    "verification": "reference",
+    "sourceUrl": "https://www.umenu.jp/menus/18.html",
+    "menuScope": "regular",
+    "groupId": "3205",
+    "variantLabel": "あとで"
+  },
+  {
     "code": "3906",
     "name": "イタリアンプリン",
     "imageSource": "https://www.saizeriya.co.jp/files/3206_%E3%82%A4%E3%82%BF%E3%83%AA%E3%82%A2%E3%83%B3%E3%83%97%E3%83%AA%E3%83%B3.webp",
@@ -216,10 +654,182 @@
     "variantLabel": "あとで"
   },
   {
+    "code": "3907",
+    "name": "チョコレートケーキ",
+    "verification": "reference",
+    "sourceUrl": "https://www.umenu.jp/menus/18.html",
+    "menuScope": "regular",
+    "groupId": "3207",
+    "variantLabel": "あとで"
+  },
+  {
+    "code": "3912",
+    "name": "プリンとティラミス クラシコの盛合せ",
+    "verification": "reference",
+    "sourceUrl": "https://www.umenu.jp/menus/18.html",
+    "menuScope": "regular",
+    "groupId": "3212",
+    "variantLabel": "あとで"
+  },
+  {
+    "code": "3913",
+    "name": "トリフアイスクリーム",
+    "verification": "reference",
+    "sourceUrl": "https://www.umenu.jp/menus/18.html",
+    "menuScope": "regular",
+    "groupId": "3213",
+    "variantLabel": "あとで"
+  },
+  {
+    "code": "3914",
+    "name": "ジェラート＆シナモンフォッカチオ",
+    "verification": "reference",
+    "sourceUrl": "https://www.umenu.jp/menus/18.html",
+    "menuScope": "regular",
+    "groupId": "3214",
+    "variantLabel": "あとで"
+  },
+  {
+    "code": "3915",
+    "name": "コーヒーゼリー＆ミルクジェラート",
+    "verification": "reference",
+    "sourceUrl": "https://www.umenu.jp/menus/18.html",
+    "menuScope": "regular",
+    "groupId": "3215",
+    "variantLabel": "あとで"
+  },
+  {
+    "code": "3916",
+    "name": "チョコレートケーキ＆ミルクジェラート",
+    "verification": "reference",
+    "sourceUrl": "https://www.umenu.jp/menus/18.html",
+    "menuScope": "regular",
+    "groupId": "3216",
+    "variantLabel": "あとで"
+  },
+  {
+    "code": "4301",
+    "name": "トッピング半熟卵",
+    "verification": "reference",
+    "sourceUrl": "https://www.umenu.jp/menus/18.html",
+    "menuScope": "regular"
+  },
+  {
+    "code": "4304",
+    "name": "トッピング野菜ソース",
+    "verification": "reference",
+    "sourceUrl": "https://www.umenu.jp/menus/18.html",
+    "menuScope": "regular"
+  },
+  {
+    "code": "4307",
+    "name": "トッピング粉チーズ",
+    "verification": "reference",
+    "sourceUrl": "https://www.umenu.jp/menus/18.html",
+    "menuScope": "regular"
+  },
+  {
     "code": "5101",
-    "name": "セットドリンクバー",
-    "imageSource": "https://www.saizeriya.co.jp/files/5101_%E3%83%89%E3%83%AA%E3%83%B3%E3%82%AF%E3%83%90%E3%83%BC_%E3%83%96%E3%83%AD%E3%83%83%E3%82%AF1.webp",
+    "name": "ドリンクバー",
     "pageUrl": "https://www.saizeriya.co.jp/menu-popular/5101/",
-    "enabled": false
+    "groupId": "5101",
+    "variantLabel": "セット",
+    "menuScope": "regular"
+  },
+  {
+    "code": "5102",
+    "name": "ドリンクバー",
+    "verification": "reference",
+    "menuScope": "regular",
+    "groupId": "5101",
+    "variantLabel": "キッズ",
+    "pageUrl": "https://www.saizeriya.co.jp/menu-popular/5101/"
+  },
+  {
+    "code": "5103",
+    "name": "ドリンクバー",
+    "verification": "reference",
+    "menuScope": "regular",
+    "groupId": "5101",
+    "variantLabel": "単品",
+    "pageUrl": "https://www.saizeriya.co.jp/menu-popular/5101/"
+  },
+  {
+    "code": "5305",
+    "name": "サイゼリヤドレッシング 500ml",
+    "verification": "reference",
+    "sourceUrl": "https://www.umenu.jp/menus/18.html",
+    "menuScope": "regular"
+  },
+  {
+    "code": "5306",
+    "name": "エクストラ・バージン・オリーブオイル 500ml",
+    "verification": "reference",
+    "sourceUrl": "https://www.umenu.jp/menus/18.html",
+    "menuScope": "regular"
+  },
+  {
+    "code": "5605",
+    "name": "焼きシナモンフォッカチオ",
+    "menuScope": "morning",
+    "pageUrl": "https://www.saizeriya.co.jp/asasaize/",
+    "groupId": "5605",
+    "variantLabel": "単品"
+  },
+  {
+    "code": "5606",
+    "name": "パンチェッタとチーズのパニーニ",
+    "menuScope": "morning",
+    "pageUrl": "https://www.saizeriya.co.jp/asasaize/",
+    "groupId": "5606",
+    "variantLabel": "単品"
+  },
+  {
+    "code": "5607",
+    "name": "フォッカチオ（朝サイゼ）",
+    "menuScope": "morning",
+    "pageUrl": "https://www.saizeriya.co.jp/asasaize/",
+    "groupId": "5607",
+    "variantLabel": "単品"
+  },
+  {
+    "code": "5615",
+    "name": "焼きシナモンフォッカチオ",
+    "menuScope": "morning",
+    "pageUrl": "https://www.saizeriya.co.jp/asasaize/",
+    "groupId": "5605",
+    "variantLabel": "コンビ（ドリンクバー付）"
+  },
+  {
+    "code": "5616",
+    "name": "パンチェッタとチーズのパニーニ",
+    "menuScope": "morning",
+    "pageUrl": "https://www.saizeriya.co.jp/asasaize/",
+    "groupId": "5606",
+    "variantLabel": "コンビ（ドリンクバー付）"
+  },
+  {
+    "code": "5625",
+    "name": "焼きシナモンフォッカチオ",
+    "menuScope": "morning",
+    "pageUrl": "https://www.saizeriya.co.jp/asasaize/",
+    "groupId": "5605",
+    "variantLabel": "セット（ドリンクバー・ポテト付）"
+  },
+  {
+    "code": "5626",
+    "name": "パンチェッタとチーズのパニーニ",
+    "menuScope": "morning",
+    "pageUrl": "https://www.saizeriya.co.jp/asasaize/",
+    "groupId": "5606",
+    "variantLabel": "セット（ドリンクバー・ポテト付）"
+  },
+  {
+    "code": "5627",
+    "name": "フォッカチオ（朝サイゼ）",
+    "menuScope": "morning",
+    "pageUrl": "https://www.saizeriya.co.jp/asasaize/",
+    "groupId": "5607",
+    "variantLabel": "セット（ドリンクバー・ポテト付）"
   }
 ]

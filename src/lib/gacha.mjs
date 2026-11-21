@@ -1,3 +1,8 @@
+import { getPlayableMenuItems } from "./menu-availability.mjs";
+
+/** Quiz and gacha use the same normal-menu pool, regardless of photo availability. */
+export const getGachaCandidates = getPlayableMenuItems;
+
 /**
  * Independent draws with replacement: a product may appear multiple times.
  * Input is already filtered to enabled order codes by the caller.

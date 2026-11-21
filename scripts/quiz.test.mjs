@@ -1,6 +1,8 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 import { appendDigit, backspaceDigit, pickQuestions, scoreResults } from "../src/lib/quiz.mjs";
+import { getPlayableMenuItems } from "../src/lib/menu-availability.mjs";
+import { readFile } from "node:fs/promises";
 
 const menu = Array.from({ length: 31 }, (_, index) => ({
   code: String(index + 1000),
@@ -42,4 +44,16 @@ test("score ignores incorrect and skipped answers", () => {
     { isCorrect: true }, { isCorrect: false }, { isCorrect: false },
     { isCorrect: true }, { isCorrect: false },
   ]), 2);
+});
+
+test("the real 114-code catalog yields 105 normal-menu quiz candidates", async () => {
+  const all = JSON.parse(await readFile(new URL("../src/data/menu.json", import.meta.url), "utf8"));
+  const eligible = getPlayableMenuItems(all);
+  assert.equal(all.length, 114);
+  assert.equal(eligible.length, 105);
+  assert.ok(eligible.some((item) => item.code === "3301" && !item.imageSource));
+  assert.ok(eligible.every((item) => item.menuScope === undefined || item.menuScope === "regular"));
+  const selected = pickQuestions(eligible, 5, () => 0.5);
+  assert.equal(selected.length, 5);
+  assert.equal(new Set(selected.map((item) => item.code)).size, 5);
 });

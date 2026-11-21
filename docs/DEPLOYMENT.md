@@ -1,67 +1,72 @@
 # GitHub Pages デプロイ構成
 
-## 公開URL
+## 公開先
 
-| 環境 | ブランチ | URL / base |
+| 環境 | ブランチ | URL / Vite base |
 | --- | --- | --- |
 | 本番 | `main` | https://naoiw.github.io/saizeriya-order/ ・ `/saizeriya-order/` |
 | 開発プレビュー | `develop` | https://naoiw.github.io/saizeriya-order/develop/ ・ `/saizeriya-order/develop/` |
 
-GitHubリポジトリの **Settings → Pages → Build and deployment → Source** は `GitHub Actions` を使用します。専用のPages環境は1つで、同じ成果物に本番とプレビューを含めます。
+**GitHub Pagesは1つのサイトです。** 本番とプレビューを別々のPagesデプロイにせず、両方のビルド結果を同じartifactへまとめます。Pages設定：**Settings → Pages → Build and deployment → Source: GitHub Actions**。
 
-## CI
+## 共通ワークフロー
 
-`.github/workflows/ci.yml` は `main`／`develop` のpushとPull Requestで実行されます。
+- `.github/workflows/ci.yml`：`naoiw/.github/.github/workflows/reusable-node-ci.yml` を呼び出します。
+- `.github/workflows/deploy-pages.yml`：`naoiw/.github/.github/workflows/reusable-vite-pages.yml` を呼び出します（`publish-preview: true`）。
+- 参照元は[naoiw/.github](https://github.com/naoiw/.github)の**リリース済みv1.1.0**（SHA `00047e65d7e53551e2644df02d2f22743ea2c471`）に固定しています。`@main`のような移動する参照先は使用しません。
+- 実行環境：**Node.js 26 / pnpm 9.14.2**。依存のインストールは`pnpm install --frozen-lockfile`です。
+- CIは`pnpm lint`（ESLint）、`pnpm typecheck`、`pnpm test`（全テスト・データセット検証）、`pnpm build`を実行します。
 
-- 依存関係をインストール（CIはNode.js 22、`npm install --no-audit --no-fund`）
-- `test:collector`、`test:quiz`、`test:gacha`、`test:gallery`、`test:dataset`
-- `check:dataset`（注文番号とURLなどの形式検証）
-- `build`、`build:pages:main`、`build:pages:develop`
+## 実行条件
 
-失敗したPRの内容はマージしません。単体テストの成功だけでは外部画像の表示やスマホの見た目までは保証できません。
+1. `main`と`develop`へのpush、または両ブランチを対象とするPRでCIを実行。
+2. `main`へのpushでは本番とプレビューをまとめてデプロイ。
+3. `develop`への**push CIが成功した場合のみ**、`workflow_run`でPagesをデプロイ。
+4. `workflow_run`では同じリポジトリ・`develop`ブランチ・pushイベント・成功結果を照合します。PR由来の結果ではデプロイしません。
+5. 必要に応じ`main`から`workflow_dispatch`で手動公開できます。
 
-## Pagesワークフロー
+`workflow_run`はデフォルトブランチ**`main`に呼び出し側YAMLが存在して初めて有効**です。`develop`へ変更をマージしても、`main`側が旧workflowの間は旧workflowが実行されます。**共有Pages workflowの本番利用はmainリリース後**です。
 
-`.github/workflows/deploy-pages.yml` は**デフォルトブランチ `main`** に置き、以下のイベントで実行します。
+## 成果物の構成
 
-1. `main` へのpush（本番リリース）
-2. `develop` の**push**を対象としたCIワークフローが成功したとき（`workflow_run`）
-3. `main` からの手動実行（`workflow_dispatch`）
+共通Pagesは`main`のソースを`stable/`、CIで検証した`develop`のソースを`preview/`へcheckoutします。
 
-`develop` のCI失敗時やPRイベントからは、開発プレビューを公開しません。
+- 本番：`pnpm run build --base=/saizeriya-order/` → `site/`直下へ
+- プレビュー：`pnpm run build --base=/saizeriya-order/develop/` → `site/develop/`へ
+- `site/.nojekyll`を追加してGitHub Pagesへ公開
+- buildジョブは`contents: read`のみ。deployジョブは`pages: write`、`id-token: write`を必要とします。
 
-### ビルドと成果物
+既存の`pnpm build:pages:main` / `build:pages:develop`もローカル検証用に維持しています。
 
-- 本番: `main` を `production/` にcheckoutし、`pnpm build:pages:main` で `production/dist/` を生成。
-- プレビュー: `develop` のCIで検証されたコミット（`workflow_run.head_sha`）または `develop` を `preview/` にcheckoutし、`pnpm build:pages:develop` で `preview/dist/` を生成。
-- Pages artifact: `production/dist/` の中身をルートへ、`preview/dist/` の中身を `develop/` へコピー。`.nojekyll` も含めます。
-- `actions/deploy-pages@v4` で `github-pages` 環境に公開します。
-
-Pages側のビルド前検証では `test:collector`、`test:quiz`、`test:gallery`、`check:dataset` を実行しています。**`test:gacha` と `test:dataset` はCI側の検証項目**であり、Pagesワークフロー内では個別には実行していません。
-
-ビルド用 Node.js は22、pnpmは9.14.2。依存関係は `pnpm install --frozen-lockfile` を使用します。
-
-## 手動での確認
-
-ローカルでbaseパスを検証する場合は次のコマンドを使います。
+## ローカルの確認
 
 ```bash
+npm install --global pnpm@9.14.2
 pnpm install --frozen-lockfile
+pnpm lint
+pnpm typecheck
+pnpm test
 pnpm build:pages:main
 pnpm build:pages:develop
 ```
 
-続けて実行した場合、`dist/` は最後のコマンドの成果物になります。公開結果は [GitHub Actions](https://github.com/naoiw/saizeriya-order/actions) から確認できます。
+両方のビルドは同じ`dist/`を使い、後から実行した方が残ります。
+
+## セキュリティ・運用上の留意点
+
+- GitHubのRuleset、Pagesの設定、Dependabot alerts/Dependency graphはリポジトリのSettingsで管理します。テンプレートから自動継承されません。
+- workflowの共通SHAを更新する際は[共有ワークフローリリース](https://github.com/naoiw/.github/releases)とCI/Pages検証を確認し、別PRで変更します。
+- `dry-run: true`を使うと公開せずartifact生成を確認できます（別の検証用workflowで実行してください）。`dry-run`でも呼び出し元の権限宣言は必要です。
+- 公式商品の画像はブラウザから外部取得します。画像URLなしの商品は「画像なし」で表示し、ビルドには影響しません。
+- `develop`から`main`へのリリースは、ユーザーが明示的に承認した後に別PRを作成し、CI・デプロイ・公開URLを確認します。
 
 ## トラブルシュート
 
 | 症状 | 確認すること |
 | --- | --- |
-| ページは開くがJS／CSSが404 | `vite` のbaseパスが本番／プレビューと一致しているか |
-| `develop/` だけ古い | `develop` のpush CI成功と、それを起点にした `Deploy GitHub Pages` の実行・成功 |
-| CIは成功だが公開されない | `github-pages` 環境／PagesのSource設定と`deploy`ジョブ結果 |
-| メニュー写真だけ表示されない | `www.saizeriya.co.jp` の画像URL、ブラウザのネットワーク状態、サイト側の外部参照制限 |
-| ガチャ結果がF5で消える | 仕様どおり。モードだけ維持され、再度ボタンを押すと抽選します |
-
-公開サイトには公式サイトへの画像リクエストが発生します。画像をGitHub Pagesへ複製しているわけではありません。
-
+| HTMLは表示するがJS/CSSが404 | Viteの`--base`と公開URL |
+| CIで失敗 | Node.js 26、pnpm 9.14.2、Lint・型チェック・テスト・ビルド |
+| `develop/`だけ古い | develop pushのCI成功、workflow_run、main上の呼び出し側workflow |
+| Pagesが失敗 | Pages Source設定、artifact、`github-pages`環境の権限 |
+| メニュー写真がない | 商品画像URLの有無と公式サイトの外部参照制限。URL未登録は仕様どおり「画像なし」 |
+| ガチャをF5すると空になる | 仕様どおり。モードだけ保持して、次のボタン押下で再抽選 |

@@ -1,11 +1,11 @@
 import { useCallback, useRef, useState } from "react";
 import DishImage from "./DishImage";
-import { drawGacha } from "../lib/gacha.mjs";
-import { menuItems, type MenuItem } from "../lib/menu";
+import { drawGacha, getGachaCandidates } from "../lib/gacha.mjs";
+import { menuItems, menuNotice, type MenuItem } from "../lib/menu";
 
 const PICK_COUNT = 5;
 const LAST_DRAW_KEY = "saizeriya-order:last-gacha-v1";
-const availableItems = menuItems.filter((item) => item.enabled !== false);
+const availableItems = getGachaCandidates(menuItems);
 
 // crypto.getRandomValues uses fresh entropy even for rapid rerolls and F5.
 // Unlike a fixed seed, it cannot replay the same sequence on every reload.
@@ -56,8 +56,8 @@ export default function Gacha() {
       <div className="section-eyebrow">MENU GACHA</div>
       <h1>メニューガチャ</h1>
       <p className="gacha-intro">
-        お店で何を注文するか迷ったら、運任せで5品。<strong>重複あり</strong>で抽選します。
-        同じ商品が複数回出たら、その数だけ注文するルールです。
+        通常メニューから、運任せで5品。<strong>重複あり</strong>で抽選します。
+        朝サイゼ・季節限定・店舗限定の商品は抽選対象外です。注文する場合は店舗の最新メニューをご確認ください。
       </p>
       <div className="gacha-action">
         <button type="button" className="button button-primary" onClick={roll}
@@ -83,6 +83,7 @@ export default function Gacha() {
               <div className="gacha-detail">
                 <strong className="gacha-item-name">{item.name}</strong>
                 {item.variantLabel && <span className="gacha-variant">{item.variantLabel}</span>}
+                {menuNotice(item) && <span className="gacha-menu-notice">{menuNotice(item)}</span>}
                 <span className="gacha-code">注文番号 <strong>{item.code}</strong></span>
               </div>
             </li>
@@ -90,7 +91,7 @@ export default function Gacha() {
         </ol>
       )}
       <p className="gacha-note">
-        抽選対象はクイズと同じ有効メニューです。ページ更新後は再びボタンを押すと抽選します。
+        画像なしの商品も含む通常メニュー {availableItems.length} 番号から抽選します。2026年2月の資料に基づく番号は販売終了の可能性があるため、注文前に確認してください。ページ更新後は再びボタンを押すと抽選します。
         直前と5件すべてが同じ順番になることは避けています。
       </p>
     </section>

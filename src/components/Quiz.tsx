@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import { menuItems, type MenuItem } from "../lib/menu";
+import { menuItems, menuNotice, type MenuItem } from "../lib/menu";
 import {
   appendDigit,
   backspaceDigit,
@@ -8,9 +8,10 @@ import {
   type QuizResult,
 } from "../lib/quiz.mjs";
 import DishImage from "./DishImage";
+import { getPlayableMenuItems } from "../lib/menu-availability.mjs";
 
 const QUESTION_COUNT = 5;
-const availableQuestions = menuItems.filter((item) => item.enabled !== false);
+const availableQuestions = getPlayableMenuItems(menuItems);
 type Phase = "ready" | "playing" | "review" | "complete";
 
 export default function Quiz() {
@@ -94,12 +95,12 @@ export default function Quiz() {
       <section className="quiz-intro">
         <div className="section-eyebrow">QUIZ MODE</div>
         <h1>注文番号クイズ</h1>
-        <p className="lead">料理の写真と商品名を見て、4桁の注文番号を答えてください。</p>
+        <p className="lead">商品名（画像がある商品は写真も）から、4桁の注文番号を答えてください。</p>
         <div className="intro-stats">
           <div><strong>{QUESTION_COUNT}</strong><span>問 / 1回</span></div>
-          <div><strong>{availableQuestions.length}</strong><span>登録メニュー</span></div>
+          <div><strong>{availableQuestions.length}</strong><span>出題対象</span></div>
         </div>
-        <p className="hint-text">毎回ランダムに5問を出題します。回答後に正解を表示し、最後に結果をまとめて確認できます。</p>
+        <p className="hint-text">毎回、通常メニューからランダムに5問を出題します。朝サイゼ・季節限定・店舗限定は対象外です。回答後に正解を表示し、最後に結果を確認できます。</p>
         {availableQuestions.length < QUESTION_COUNT ? (
           <p role="alert" className="warning">開始には5件以上のメニューデータが必要です。</p>
         ) : (
@@ -159,6 +160,7 @@ export default function Quiz() {
         </div>
         <h1 className="question-name">{current.name}</h1>
         {current.variantLabel && <p className="question-variant">{current.variantLabel}</p>}
+        {menuNotice(current) && <p className="menu-notice">{menuNotice(current)}</p>}
         <p className="question-subtitle">このメニューの注文番号は？</p>
       </div>
 

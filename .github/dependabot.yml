@@ -1,0 +1,29 @@
+version: 2
+updates:
+  # The npm ecosystem covers pnpm (package.json + pnpm-lock.yaml).
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "monthly"
+      time: "04:42"
+      timezone: "Asia/Tokyo"
+    open-pull-requests-limit: 5
+    groups:
+      react-routine:
+        applies-to: version-updates
+        patterns: ["*"]
+        update-types: ["minor", "patch"]
+
+  # Review reusable workflow SHA updates against a released version first.
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "monthly"
+      time: "05:42"
+      timezone: "Asia/Tokyo"
+    open-pull-requests-limit: 5
+    groups:
+      actions-routine:
+        applies-to: version-updates
+        patterns: ["*"]
+        update-types: ["minor", "patch"]

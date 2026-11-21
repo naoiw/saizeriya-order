@@ -1,6 +1,6 @@
 import type { MenuItem } from "./menu";
 export type GallerySort = "code-asc" | "code-desc" | "name-asc" | "name-desc";
-export type GalleryItem = Pick<MenuItem, "code" | "name" | "imageSource" | "pageUrl"> & {
+export type GalleryItem = Pick<MenuItem, "code" | "name" | "imageSource" | "pageUrl" | "sourceUrl" | "menuScope" | "verification"> & {
   groupId: string;
   codes: { code: string; label: string }[];
 };

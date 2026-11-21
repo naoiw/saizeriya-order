@@ -2,9 +2,9 @@
 
 ## 動作環境
 
-- Node.js 20.19+ または 22.12+（CIは22）
-- pnpm 9系（Pagesワークフローは9.14.2）
-- React 19 / TypeScript 5 / Vite 7
+- **Node.js 26**（`.nvmrc`、`engines.node`）
+- **pnpm 9.14.2**（Node 26にCorepackが同梱されないため、別途導入）
+- React 19 / TypeScript 6 / Vite 8 / ESLint 10
 - 単体テストはNode.js組み込み `node --test` を使用
 
 ## セットアップ
@@ -13,7 +13,7 @@
 git clone https://github.com/naoiw/saizeriya-order.git
 cd saizeriya-order
 git switch develop
-corepack enable
+npm install --global pnpm@9.14.2
 pnpm install --frozen-lockfile
 pnpm dev
 ```
@@ -23,6 +23,9 @@ pnpm dev
 ## テストとビルド
 
 ```bash
+pnpm lint           # ESLint
+pnpm typecheck      # TypeScript
+pnpm test           # 全Node.jsテスト + データセット検証
 pnpm test:collector  # 公式HTMLの解析・画像抽出
 pnpm test:quiz       # 重複なしの出題・4桁入力・採点
 pnpm test:gacha      # 重複あり抽選・再抽選・入力検証
@@ -52,6 +55,7 @@ pnpm build:pages:develop
 | `src/components/DishImage.tsx` | 公式写真の表示と読み込み失敗時の代替UI |
 | `src/lib/quiz.mjs` / `gacha.mjs` / `gallery.mjs` | テスト可能な抽選・採点・ギャラリー処理 |
 | `src/lib/menu.ts` | メニューデータの型と起動時検証 |
+| `src/lib/menu-availability.mjs` | クイズ・ガチャ共通の出題対象判定（朝・季節・店舗限定を除外） |
 | `src/data/menu.json` | 4桁注文番号をキーとするメニュー情報（画像は任意） |
 | `src/styles.css` | 共通レイアウト、各モード、レスポンシブCSS |
 | `scripts/` | メニュー収集、静的検証、テスト |
@@ -75,7 +79,7 @@ pnpm test:dataset
 - 収集スクリプトは公式ページを逐次取得する**ネットワーク処理**です。頻繁な繰り返しは避けてください。
 - 既存の手動レビュー済みレコードは収集時に上書きせず、コードにない新規メニューを追加するために使います。
 - 新しい複数番号グループを設定する場合は `src/lib/menu.ts` と `scripts/check-dataset.mjs` にある公式ページの例外対応も確認してください。
-- 画像URLが実際に正しい料理を示すかは静的テストだけでは保証できません。プレビューで目視確認が必要です。画像不明の場合はURLを推測せず省略してください。参考資料からの候補は `verification: "reference"`、朝は `menuScope: "morning"`、季節は `menuScope: "seasonal"` に区別します。
+- 画像URLが実際に正しい料理を示すかは静的テストだけでは保証できません。プレビューで目視確認が必要です。画像不明の場合はURLを推測せず省略してください。参考資料からの候補は `verification: "reference"`、朝は `menuScope: "morning"`、季節は `menuScope: "seasonal"`、店舗限定は `menuScope: "store"` に区別します。朝・季節・店舗限定はクイズ・ガチャから除外してギャラリーで閲覧可能にします。
 
 ## PRとブランチ運用
 
@@ -88,3 +92,10 @@ pnpm test:dataset
 
 開発用UIの寸法・表示ルールは [ui-guidelines.md](ui-guidelines.md) を参照してください。
 
+
+## 共通テンプレートとリポジトリ規約
+
+- `naoiw/react-vite-template`のNode26・pnpm9.14.2・ESLint・React/Vite・TypeScriptに合わせています。既存のUIとゲーム固有のロジックは維持します。
+- `naoiw/.github`の再利用CIとPages workflowはv1.1.0のSHAで固定し、変更時にはPR・Actionsで再検証します。
+- `.github/dependabot.yml`で依存更新を月次に確認。GitHubのDependabot alertsなどはSettingsから確認します。
+- `AGENTS.md`、`.cursor/rules/naoiw-default.mdc`、`.github/copilot-instructions.md`は共通の管理領域を含み、プロジェクト固有規約はその外側に配置します。

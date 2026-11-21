@@ -14,7 +14,7 @@
   --color-surface-soft: #fafbf8;
   --color-ink: #24342b;
   --color-muted: #66766c;
-  --color-faint: #88968d;
+  --color-faint: #718076;
   --color-line: #dce5dc;
   --color-line-strong: #cbdacd;
   --color-green: #286446;
@@ -749,6 +749,13 @@ h2 { font-size: 18px; }
   .quiz-play .review-code strong { font-size: 37px; }
   .quiz-play .review-card .button { min-height: 42px; padding: 8px 12px; }
 }
+@media (max-width: 380px) {
+  /* Keep the existing navigation labels visible on narrow phones. */
+  .brand { font-size: 11px; }
+  .brand::before { display: none; }
+  .main-nav button { padding-inline: 6px; font-size: 10px; }
+}
+
 @media (max-width: 620px) and (max-height: 740px) {
   .app-shell:has(.quiz-play) .site-footer { display: none; }
   .quiz-play .keyboard-hint { display: none; }

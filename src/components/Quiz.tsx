@@ -8,9 +8,10 @@ import {
   type QuizResult,
 } from "../lib/quiz.mjs";
 import DishImage from "./DishImage";
+import { getPlayableMenuItems } from "../lib/menu-availability.mjs";
 
 const QUESTION_COUNT = 5;
-const availableQuestions = menuItems.filter((item) => item.enabled !== false);
+const availableQuestions = getPlayableMenuItems(menuItems);
 type Phase = "ready" | "playing" | "review" | "complete";
 
 export default function Quiz() {
@@ -97,9 +98,9 @@ export default function Quiz() {
         <p className="lead">商品名（画像がある商品は写真も）から、4桁の注文番号を答えてください。</p>
         <div className="intro-stats">
           <div><strong>{QUESTION_COUNT}</strong><span>問 / 1回</span></div>
-          <div><strong>{availableQuestions.length}</strong><span>登録メニュー</span></div>
+          <div><strong>{availableQuestions.length}</strong><span>出題対象</span></div>
         </div>
-        <p className="hint-text">毎回ランダムに5問を出題します。回答後に正解を表示し、最後に結果をまとめて確認できます。</p>
+        <p className="hint-text">毎回、通常メニューからランダムに5問を出題します。朝サイゼ・季節限定・店舗限定は対象外です。回答後に正解を表示し、最後に結果を確認できます。</p>
         {availableQuestions.length < QUESTION_COUNT ? (
           <p role="alert" className="warning">開始には5件以上のメニューデータが必要です。</p>
         ) : (

@@ -1,6 +1,6 @@
 import type { MenuItem } from "./menu";
 
-export function getGachaCandidates<T extends Pick<MenuItem, "enabled">>(items: readonly T[]): T[];
+export function getGachaCandidates<T extends Pick<MenuItem, "enabled" | "menuScope">>(items: readonly T[]): T[];
 
 export function drawGacha<T extends Pick<MenuItem, "code">>(
   items: readonly T[],

@@ -1,7 +1,7 @@
-/** Use the same enabled order-code pool as the quiz, including entries without images. */
-export function getGachaCandidates(items) {
-  return items.filter((item) => item.enabled !== false);
-}
+import { getPlayableMenuItems } from "./menu-availability.mjs";
+
+/** Quiz and gacha use the same normal-menu pool, regardless of photo availability. */
+export const getGachaCandidates = getPlayableMenuItems;
 
 /**
  * Independent draws with replacement: a product may appear multiple times.

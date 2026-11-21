@@ -1,6 +1,6 @@
 import data from "../data/menu.json";
 
-export type MenuScope = "regular" | "morning" | "seasonal";
+export type MenuScope = "regular" | "morning" | "seasonal" | "store";
 export type MenuItem = {
   code: string;
   name: string;
@@ -26,6 +26,7 @@ const variantPageIds: Record<string, string> = {
 export function menuNotice(item: Pick<MenuItem, "menuScope" | "verification">): string | null {
   if (item.menuScope === "morning") return "朝サイゼ（一部店舗・時間限定）";
   if (item.menuScope === "seasonal") return "季節限定・現在の販売状況は要確認";
+  if (item.menuScope === "store") return "店舗限定・取り扱い店舗を要確認";
   if (item.verification === "reference") return "2026年2月のメニュー資料を基にした候補・現在の販売は要確認";
   return null;
 }
@@ -49,7 +50,7 @@ export function validateMenuItems(input: unknown): MenuItem[] {
         (pageUrl === undefined && sourceUrl === undefined) ||
         (groupId !== undefined && (typeof groupId !== "string" || !/^\d{4}$/.test(groupId))) ||
         (variantLabel !== undefined && (typeof variantLabel !== "string" || !variantLabel.trim())) ||
-        (menuScope !== undefined && !["regular", "morning", "seasonal"].includes(String(menuScope))) ||
+        (menuScope !== undefined && !["regular", "morning", "seasonal", "store"].includes(String(menuScope))) ||
         (verification !== undefined && verification !== "reference") ||
         (enabled !== undefined && typeof enabled !== "boolean")) {
       throw new Error("Invalid menu record at " + index);

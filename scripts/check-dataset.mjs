@@ -22,7 +22,7 @@ for (const [index, item] of items.entries()) {
         (item.pageUrl === undefined && item.sourceUrl === undefined) ||
         (item.groupId !== undefined && (typeof item.groupId !== "string" || !/^\d{4}$/.test(item.groupId))) ||
         (item.variantLabel !== undefined && (typeof item.variantLabel !== "string" || !item.variantLabel.trim())) ||
-        (item.menuScope !== undefined && !["regular", "morning", "seasonal"].includes(item.menuScope)) ||
+        (item.menuScope !== undefined && !["regular", "morning", "seasonal", "store"].includes(item.menuScope)) ||
         (item.verification !== undefined && item.verification !== "reference") ||
         (item.enabled !== undefined && typeof item.enabled !== "boolean")) {
       throw new Error("Missing or invalid fields");

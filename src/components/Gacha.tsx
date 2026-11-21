@@ -56,8 +56,8 @@ export default function Gacha() {
       <div className="section-eyebrow">MENU GACHA</div>
       <h1>メニューガチャ</h1>
       <p className="gacha-intro">
-        登録済みメニュー全体から、運任せで5品。<strong>重複あり</strong>で抽選します。
-        過去メニューや限定商品も抽選対象です。注文する場合は店舗の最新メニューをご確認ください。
+        通常メニューから、運任せで5品。<strong>重複あり</strong>で抽選します。
+        朝サイゼ・季節限定・店舗限定の商品は抽選対象外です。注文する場合は店舗の最新メニューをご確認ください。
       </p>
       <div className="gacha-action">
         <button type="button" className="button button-primary" onClick={roll}
@@ -91,7 +91,7 @@ export default function Gacha() {
         </ol>
       )}
       <p className="gacha-note">
-        画像なしを含む、すべての有効メニュー（現在114番号）から抽選します。過去の資料・朝サイゼ・季節商品は注文できない場合があります。ページ更新後は再びボタンを押すと抽選します。
+        画像なしの商品も含む通常メニュー {availableItems.length} 番号から抽選します。2026年2月の資料に基づく番号は販売終了の可能性があるため、注文前に確認してください。ページ更新後は再びボタンを押すと抽選します。
         直前と5件すべてが同じ順番になることは避けています。
       </p>
     </section>
